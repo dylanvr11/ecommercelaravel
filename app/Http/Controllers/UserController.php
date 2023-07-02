@@ -9,6 +9,30 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // public function showAllUsers()
+    // {
+    //     return view('users.index');
+    // }
+
+    public function showAllUsers(){
+        $users = $this->getAllUsers()->original['users'];
+        return view('users.index', compact('users'));
+    }
+
+    public function showEditUser(User $user){
+        // $user->load('roles');
+        // $roles = $this->getAllRoles()->original['roles'];
+        // return view('users.edit-user', compact('user', 'roles'));
+        return view('users.edit-user', compact('user'));
+
+    }
+
+    public function showCreateUser(){
+        // $roles = $this->getAllRoles()->original['roles'];
+        // return view('users.create-user', compact('roles'));
+        return view('users.create-user');
+    }
+
     public function getAllUsers()
     {
         $users = User::get();
@@ -45,7 +69,8 @@ class UserController extends Controller
     {
         $user = new User($request->all());
         $user->save();
-        return response()->json(['user' => $user], 201);
+        if($request->ajax()) return response()->json(['user'=>$user], 201);
+        return back()->with('success','Usuario Creado');
     }
     /*
     public function updateUser(User $user, Request $request)
@@ -63,9 +88,22 @@ class UserController extends Controller
     }
 
 
-    public function deleteUser(User $user, Request $request)
+    // public function deleteUser(User $user, Request $request)
+    // {
+    //     $user->delete();
+    //     return response()->json([], 204);
+    // }
+
+
+    public function deleteAUser(User $user, Request $request)
     {
+        /*
+        sin la vista
         $user->delete();
         return response()->json([], 204);
+        */
+        $user->delete();
+        if($request->ajax()) return response()->json([], 204);
+        return back()->with('success','Usuario eliminado');
     }
 }

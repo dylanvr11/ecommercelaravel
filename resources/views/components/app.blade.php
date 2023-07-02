@@ -22,6 +22,9 @@
     <x-menu/>
     {{-- content --}}
     <main id="app">
+        <div class="container mt-5">
+            <x-alerts/>
+        </div>
         {{$slot}}
         {{-- {{$sum}} --}}
     </main>

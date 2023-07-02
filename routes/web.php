@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -11,6 +12,17 @@ use App\Http\Controllers\Auth\ConfirmPasswordController;
 Route::view('/', 'home');
 
 Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
+
+// Users routes
+Route::group(['prefix' => 'Users', 'controller' => UserController::class], function(){
+    Route::get('/','showAllUsers')->name('users');
+    Route::get('/CreateUser','showCreateUser')->name('user.create');
+    Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
+
+    Route::post('/CreateUser','createUser')->name('user.create.post');
+    // Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
+    // Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
+});
 
 // Auth -------------------
 Route::group(['controller' => LoginController::class], function(){
