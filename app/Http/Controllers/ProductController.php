@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function showProducts()
+    {
+        return view('products.index');
+    }
+
     public function showHomeWithProducts()
     {
         $products = $this->getAllProducts()->original['products'];

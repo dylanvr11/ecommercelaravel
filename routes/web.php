@@ -13,7 +13,7 @@ Route::view('/', 'home');
 
 Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
 
-// Users routes
+// Users
 Route::group(['prefix' => 'Users', 'controller' => UserController::class], function(){
     Route::get('/','showAllUsers')->name('users');
     Route::get('/CreateUser','showCreateUser')->name('user.create');
@@ -22,6 +22,20 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
     Route::post('/CreateUser','createUser')->name('user.create.post');
     Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
     Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
+});
+
+
+// Products
+Route::group(['prefix' => 'Products', 'controller' => ProductController::class], function(){
+    Route::get('/','showProducts')->name('products');
+    //viene de la api
+    Route::get('/GetAllBooks', 'getAllBooks');
+    Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
+    Route::get('/GetABook/{book}', 'getABook');
+    Route::post('/SaveBook', 'saveBook');
+    Route::post('/UpdateBook/{book}', 'updateBook');
+    Route::delete('/DeleteABook/{book}', 'deleteBook');
+
 });
 
 // Auth -------------------

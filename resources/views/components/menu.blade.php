@@ -41,6 +41,11 @@
                                 >Usuarios
                             </a>
 
+                            {{-- Products --}}
+                            <a class="dropdown-item" href="{{ route('products') }}"
+                            >Productos
+                            </a>
+
                             {{-- Logoout --}}
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
