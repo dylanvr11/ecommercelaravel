@@ -80,11 +80,39 @@ class UserController extends Controller
     }
     sin el request
     */
-
+    /*
+    con el request
     public function updateUser(User $user, UpdateUserRequest $request)
     {
         $user->update($request->all());
         return response()->json(['user' => $user->refresh()], 201);
+    }
+*/
+//Diga usario editado
+/*
+    public function updateUser(User $user, UpdateUserRequest $request)
+    {
+        $user->update($request->all());
+        if($request->ajax()) return response()->json(['user'=>$user->refresh()], 201);
+        return back()->with('success','Usuario Editado');
+    }
+*/
+//para que no me guarde la contraseña nula
+    public function updateUser(User $user, UpdateUserRequest $request)
+    {
+        $allRequest = $request->all();
+
+        if(!isset($allRequest['password'])){
+            if(!$allRequest['password']) {
+                unset($allRequest['password']);
+                //usent($allRequest['password_confirmation']);
+            }
+        }
+        //dd($allRequest);
+        $user->update($allRequest);
+        if($request->ajax()) return response()->json(['user'=>$user->refresh()], 201);
+        return back()->with('success','Usuario Editado');
+
     }
 
 
@@ -94,8 +122,8 @@ class UserController extends Controller
     //     return response()->json([], 204);
     // }
 
-
-    public function deleteAUser(User $user, Request $request)
+    //para el boton delete
+    public function deleteUser(User $user, Request $request)
     {
         /*
         sin la vista

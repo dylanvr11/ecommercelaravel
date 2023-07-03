@@ -20,8 +20,8 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
     Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
 
     Route::post('/CreateUser','createUser')->name('user.create.post');
-    // Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
-    // Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
+    Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
+    Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
 });
 
 // Auth -------------------

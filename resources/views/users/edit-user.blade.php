@@ -5,7 +5,11 @@
                 <h2>Editar Usuario</h2>
             </div>
             <div class="card-body">
-                <x-user.form-user/>
+                <form action="{{route('user.edit.put', ['user' => $user->id])}}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <x-user.form-user :user="$user"/>
+                </form>
             </div>
         </div>
     </section>

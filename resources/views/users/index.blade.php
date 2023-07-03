@@ -23,6 +23,15 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->last_name}}</td>
                                 <td>{{$user->email}}</td>
+                                <td class="d-flex">
+                                    <a href="{{route('user.edit',['user' => $user->id])}}"
+                                        class="btn btn-warning btn-sm mx-2">Editar</a>
+                                    <form action="{{route('user.delete',['user' => $user->id])}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
