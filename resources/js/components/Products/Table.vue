@@ -14,10 +14,10 @@
 				<td>{{ product.stock }}</td>
 				<td>{{ product.price }}</td>
 				<td>
-					<button class="btn btn-warning me-2" @click="getProduct(product.id)">
+					<button class="btn btn-warning me-2" @click="getProduct(product)">
 						Editar
 					</button>
-					<button class="btn btn-danger">Eliminar</button>
+					<button class="btn btn-danger" @click="deleteProduct(product)">Eliminar</button>
 				</td>
 			</tr>
 		</tbody>
@@ -41,11 +41,31 @@
 				// this.products = this.products_data
 				this.products = [...this.products_data]
 			},
-			async getProduct(product_id) {
+			async getProduct(product) {
 				try {
-					const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
+					//const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
 					// this.$parent.product = data.product
-					this.$parent.editProduct(data.product)
+					this.$parent.editProduct(product)
+				} catch (error) {
+					console.error(error)
+				}
+			},
+			async deleteProduct(product) {
+				try {
+					const result = await swal.fire({
+						icon: 'info',
+						title: 'Quiere eliminar el libro?',
+						showCancelButton: true,
+						confirmButtonText: 'Eliminar'
+					})
+					if (!result.isConfirmed) return
+					await axios.delete(`Products/DeleteAProduct/${product.id}`)
+					this.$parent.getProducts()
+					swal.fire({
+						icon: 'success',
+						title: 'Felicitaciones!',
+						text: 'Libro Eliminado!'
+					})
 				} catch (error) {
 					console.error(error)
 				}

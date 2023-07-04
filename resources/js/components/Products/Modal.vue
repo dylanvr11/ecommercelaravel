@@ -121,7 +121,7 @@
 					swal.fire({
 						icon: 'success',
 						title: 'Felicidades!',
-						text: 'Libro almacedado!'
+						text: 'Producto almacedado!'
 					})
 					this.$parent.closeModal()
 				} catch (error) {

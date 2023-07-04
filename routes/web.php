@@ -34,6 +34,8 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
     Route::post('/SaveProduct', 'saveProduct');
     Route::get('/GetAProduct/{product}', 'getAProduct');
     Route::put('/UpdateProduct/{product}', 'updateProduct');
+    Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+
 
     Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
     Route::get('/GetABook/{book}', 'getABook');
