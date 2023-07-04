@@ -48,4 +48,6 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
 //Categories
 Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function(){
     Route::get('/GetAllCategories', 'getAllCategories');
+    Route::get('/GetAllProductsByCategory/{category}', 'getAllProductsByCategory');
+    Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
 });

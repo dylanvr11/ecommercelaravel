@@ -12,8 +12,8 @@ use App\Http\Controllers\Auth\ConfirmPasswordController;
 
 Route::view('/', 'home');
 
-Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
-
+//Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
+Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
 // Users
 Route::group(['prefix' => 'Users', 'controller' => UserController::class], function(){
     Route::get('/','showAllUsers')->name('users');
