@@ -33,7 +33,8 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
     Route::get('/GetAllProducts', 'getAllProducts');
     Route::post('/SaveProduct', 'saveProduct');
     Route::get('/GetAProduct/{product}', 'getAProduct');
-    Route::put('/UpdateProduct/{product}', 'updateProduct');
+    // Route::put('/UpdateProduct/{product}', 'updateProduct');
+    Route::post('/UpdateProduct/{product}', 'updateProduct');
     Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
 
 

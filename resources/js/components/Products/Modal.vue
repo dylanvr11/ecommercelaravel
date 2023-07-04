@@ -142,7 +142,7 @@
 						//console.log(this.book)
 						await axios.post('Products/SaveProduct', product)
 					} else {
-						await axios.put(`Products/UpdateProduct/${this.product.id}`, product)
+						await axios.post(`Products/UpdateProduct/${this.product.id}`, product)
 					}
 					swal.fire({
 						icon: 'success',

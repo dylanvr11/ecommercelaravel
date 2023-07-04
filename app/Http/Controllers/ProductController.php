@@ -40,9 +40,17 @@ class ProductController extends Controller
 
     public function updateProduct(Product $product, Request $request){
 
+        $requestAll = $request->all();
+        $this->uploadImages($request,$product);
+        $requestAll['image'] = $product->image;
+        $product->update($requestAll);
+        return response()->json(['book' => $product->refresh()->load('Category')], 201);
+        // acá imagen otra direccion
+        /*
         $this->uploadImages($request, $product);
         $product->update($request->all());
         return response()->json(['product' => $product->refresh()->load('Category')],201);
+        */
     }
 
     public function deleteProduct(Product $product){
