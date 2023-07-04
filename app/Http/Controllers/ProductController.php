@@ -23,4 +23,11 @@ class ProductController extends Controller
 		$products = Product::get();
 		return response()->json(['products' => $products], 200);
 	}
+
+    public function saveProduct(Request $request){
+        $product = new Product($request->all());
+        //dd($request);
+        $product->save();
+        return response()->json(['product' => $product], 200);
+    }
 }

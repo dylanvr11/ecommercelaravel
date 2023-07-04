@@ -14,7 +14,7 @@
 				<td>{{ product.stock }}</td>
 				<td>{{ product.price }}</td>
 				<td>
-					<button class="btn btn-warning">Editar</button>
+					<button class="btn btn-warning me-2">Editar</button>
 					<button class="btn btn-danger">Eliminar</button>
 				</td>
 			</tr>

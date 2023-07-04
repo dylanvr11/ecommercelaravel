@@ -14,13 +14,69 @@
 					></button>
 				</div>
 				<div class="modal-body">
-					<h1>Hola</h1>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-						Close
-					</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<form @submit.prevent="storeBook">
+						<div class="mb-3">
+							<label for="name" class="form-label">Nombre</label>
+							<input
+								type="text"
+								class="form-control"
+								id="name"
+								v-model="product.name"
+							/>
+						</div>
+						<div class="mb-3">
+							<label for="stock" class="form-label">Stock</label>
+							<input
+								type="number"
+								class="form-control"
+								id="stock"
+								v-model="product.stock"
+							/>
+						</div>
+						<div class="mb-3">
+							<label for="price" class="form-label">Precio</label>
+							<input
+								type="number"
+								class="form-control"
+								id="price"
+								v-model="product.price"
+							/>
+						</div>
+						<div class="mb-3">
+							<label for="description" class="form-label">Descripcion</label>
+							<textarea
+								type="text"
+								class="form-control"
+								id="description"
+								rows="3"
+								v-model="product.description"
+							></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="categories" class="form-label">Categorias</label>
+							<v-select
+								id="categories"
+								:options="categories"
+								v-model="product.category_id"
+								:reduce="category => category.id"
+								label="name"
+								:clearable="false"
+							></v-select>
+						</div>
+						<hr />
+						<section class="d-flex justify-contend-end mt-3">
+							<button
+								type="button"
+								class="btn btn-secondary me-1"
+								data-bs-dismiss="modal"
+							>
+								Close
+							</button>
+							<button type="submit" class="btn btn-primary me-1">
+								{{ `${is_create ? 'Crear' : 'Actualizar'}` }}
+							</button>
+						</section>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -30,7 +86,46 @@
 <script>
 	export default {
 		data() {
-			return { is_create: false }
+			return {
+				is_create: true,
+				categories: [],
+				product: {}
+			}
+		},
+		created() {
+			this.index()
+		},
+		methods: {
+			index() {
+				this.getCategories()
+			},
+			async getCategories() {
+				const { data } = await axios.get('/api/Categories/GetAllCategories')
+				this.categories = data.categories
+			},
+			async storeBook() {
+				try {
+					if (this.is_create) {
+						//console.log(this.book)
+						await axios.post('api/Products/SaveProduct', this.product)
+					} else {
+						await axios.put(`api/Products/UpdateProduct/${this.product.id}`, this.book)
+					}
+					swal.fire({
+						icon: 'success',
+						title: 'Felicidades!',
+						text: 'Libro almacedado!'
+					})
+					this.$parent.closeModal()
+				} catch (error) {
+					console.error(error)
+					swal.fire({
+						icon: 'error',
+						title: 'Oops...',
+						text: 'Algo salio mal!'
+					})
+				}
+			}
 		}
 	}
 </script>

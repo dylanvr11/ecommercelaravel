@@ -16,7 +16,7 @@
 				</div>
 			</section>
 		</div>
-		<section>
+		<section v-if="load_modal">
 			<modal />
 		</section>
 	</div>
@@ -34,7 +34,9 @@
 		data() {
 			return {
 				products: [],
-				load: false
+				load: false,
+				load_modal: false,
+				modal: null
 			}
 		},
 		created() {
@@ -46,6 +48,7 @@
 			},
 			async getProducts() {
 				try {
+					this.load = false
 					const { data } = await axios.get('/api/Products/GetAllProducts')
 					this.products = data.products
 					this.load = true
@@ -53,7 +56,24 @@
 					console.error(error)
 				}
 			},
-			openModal() {}
+			openModal() {
+				this.load_modal = true
+				setTimeout(() => {
+					this.modal = new bootstrap.Modal(document.getElementById('product_modal'), {
+						keyboard: false
+					})
+					this.modal.show()
+					const modal = document.getElementById('product_modal')
+					modal.addEventListener('hidden.bs.modal', () => {
+						console.log('hola')
+						this.load_modal = false
+					})
+				}, 200)
+			},
+			closeModal() {
+				this.modal.hide()
+				this.getProducts()
+			}
 		}
 	}
 </script>
