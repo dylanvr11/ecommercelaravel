@@ -28,6 +28,16 @@ class ProductController extends Controller
         $product = new Product($request->all());
         //dd($request);
         $product->save();
-        return response()->json(['product' => $product], 200);
+        return response()->json(['product' => $product], 201);
+    }
+
+    public function getAProduct(Product $product){
+        $product->load('Category');
+        return response()->json(['product' => $product],200);
+    }
+
+    public function updateProduct(Product $product, Request $request){
+        $product->update($request->all());
+        return response()->json(['product' => $product->refresh()->load('Category')],201);
     }
 }

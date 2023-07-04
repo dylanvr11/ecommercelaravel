@@ -17,7 +17,7 @@
 			</section>
 		</div>
 		<section v-if="load_modal">
-			<modal />
+			<modal :product_data="product" />
 		</section>
 	</div>
 </template>
@@ -36,7 +36,8 @@
 				products: [],
 				load: false,
 				load_modal: false,
-				modal: null
+				modal: null,
+				product: null
 			}
 		},
 		created() {
@@ -49,7 +50,7 @@
 			async getProducts() {
 				try {
 					this.load = false
-					const { data } = await axios.get('/api/Products/GetAllProducts')
+					const { data } = await axios.get('Products/GetAllProducts')
 					this.products = data.products
 					this.load = true
 				} catch (error) {
@@ -67,12 +68,17 @@
 					modal.addEventListener('hidden.bs.modal', () => {
 						console.log('hola')
 						this.load_modal = false
+						this.product = null
 					})
 				}, 200)
 			},
 			closeModal() {
 				this.modal.hide()
 				this.getProducts()
+			},
+			editProduct(product) {
+				this.product = product
+				this.openModal()
 			}
 		}
 	}

@@ -85,6 +85,7 @@
 
 <script>
 	export default {
+		props: ['product_data'],
 		data() {
 			return {
 				is_create: true,
@@ -98,18 +99,24 @@
 		methods: {
 			index() {
 				this.getCategories()
+				this.setBook()
+			},
+			setBook() {
+				if (!this.product_data) return
+				this.product = { ...this.product_data }
+				this.is_create = false
 			},
 			async getCategories() {
-				const { data } = await axios.get('/api/Categories/GetAllCategories')
+				const { data } = await axios.get('Categories/GetAllCategories')
 				this.categories = data.categories
 			},
 			async storeBook() {
 				try {
 					if (this.is_create) {
 						//console.log(this.book)
-						await axios.post('api/Products/SaveProduct', this.product)
+						await axios.post('Products/SaveProduct', this.product)
 					} else {
-						await axios.put(`api/Products/UpdateProduct/${this.product.id}`, this.book)
+						await axios.put(`Products/UpdateProduct/${this.product.id}`, this.book)
 					}
 					swal.fire({
 						icon: 'success',

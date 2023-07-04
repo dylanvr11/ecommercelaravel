@@ -14,7 +14,9 @@
 				<td>{{ product.stock }}</td>
 				<td>{{ product.price }}</td>
 				<td>
-					<button class="btn btn-warning me-2">Editar</button>
+					<button class="btn btn-warning me-2" @click="getProduct(product.id)">
+						Editar
+					</button>
 					<button class="btn btn-danger">Eliminar</button>
 				</td>
 			</tr>
@@ -36,7 +38,17 @@
 		},
 		methods: {
 			index() {
-				this.products = this.products_data
+				// this.products = this.products_data
+				this.products = [...this.products_data]
+			},
+			async getProduct(product_id) {
+				try {
+					const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
+					// this.$parent.product = data.product
+					this.$parent.editProduct(data.product)
+				} catch (error) {
+					console.error(error)
+				}
 			}
 		}
 	}

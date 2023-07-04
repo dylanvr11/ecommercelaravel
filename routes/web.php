@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -28,14 +29,23 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 // Products
 Route::group(['prefix' => 'Products', 'controller' => ProductController::class], function(){
     Route::get('/','showProducts')->name('products');
-    //viene de la api
-    Route::get('/GetAllBooks', 'getAllBooks');
+    //viene de la API
+    Route::get('/GetAllProducts', 'getAllProducts');
+    Route::post('/SaveProduct', 'saveProduct');
+    Route::get('/GetAProduct/{product}', 'getAProduct');
+    Route::put('/UpdateProduct/{product}', 'updateProduct');
+
     Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
     Route::get('/GetABook/{book}', 'getABook');
-    Route::post('/SaveBook', 'saveBook');
     Route::post('/UpdateBook/{book}', 'updateBook');
     Route::delete('/DeleteABook/{book}', 'deleteBook');
 
+});
+
+//Categories
+Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function(){
+    //Viene de la API
+    Route::get('/GetAllCategories', 'getAllCategories');
 });
 
 // Auth -------------------
