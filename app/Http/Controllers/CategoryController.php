@@ -25,6 +25,13 @@ class CategoryController extends Controller
         return response()->json(['category' => $category], 200);
     }
 
+    public function updateCategory(Category $category, Request $request){
+
+        $requestAll = $request->all();
+        $category->update($requestAll);
+        return response()->json(['category' => $category->refresh()], 201);
+    }
+
     public function deleteCategory(Category $category)
 	{
         $category->delete();

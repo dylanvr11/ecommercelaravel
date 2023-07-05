@@ -66,7 +66,8 @@ Route::group(['prefix' => 'Categories', 'controller' => CategoryController::clas
     //Viene de la API
     Route::get('/GetAllCategories', 'getAllCategories');
     Route::post('/SaveCategory', 'saveCategory');
-    Route::delete('/DeleteACategory/{Category}', 'deleteCategory');
+    Route::post('/UpdateCategory/{category}', 'updateCategory');
+    Route::delete('/DeleteACategory/{category}', 'deleteCategory');
 });
 
 // Auth -------------------
