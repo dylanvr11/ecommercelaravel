@@ -101,7 +101,9 @@
 				is_create: true,
 				categories: [],
 				product: {},
-				file: null
+				file: null,
+				errors_request: null,
+				error_text: ''
 			}
 		},
 		created() {
@@ -128,7 +130,6 @@
 				form_data.append('description', this.product.description)
 				form_data.append('category_id', this.product.category_id)
 				form_data.append('price', this.product.price)
-				console.log('hola')
 				return form_data
 			},
 			async getCategories() {
@@ -151,12 +152,27 @@
 					})
 					this.$parent.closeModal()
 				} catch (error) {
-					console.error(error)
-					swal.fire({
-						icon: 'error',
-						title: 'Oops...',
-						text: 'Algo salio mal!'
-					})
+					if (error.response.status == 422) {
+						this.errors_request = error.response.data.errors
+						for (let field in this.errors_request) {
+							if (this.errors_request.hasOwnProperty(field)) {
+								this.error_text += this.errors_request[field][0] + '\n'
+							}
+						}
+						console.log(this.error_text)
+						swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: this.error_text
+						})
+					} else {
+						console.error(error)
+						swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Algo salio mal!'
+						})
+					}
 				}
 			}
 		}

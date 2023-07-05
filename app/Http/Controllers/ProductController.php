@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -25,7 +27,7 @@ class ProductController extends Controller
 		return response()->json(['products' => $products], 200);
 	}
 
-    public function saveProduct(Request $request){
+    public function saveProduct(CreateProductRequest $request){
         $product = new Product($request->all());
         //dd($request);
         $this->uploadImages($request, $product);  //despues carga la imagen
@@ -38,13 +40,13 @@ class ProductController extends Controller
         return response()->json(['product' => $product],200);
     }
 
-    public function updateProduct(Product $product, Request $request){
+    public function updateProduct(Product $product, UpdateProductRequest $request){
 
         $requestAll = $request->all();
         $this->uploadImages($request,$product);
         $requestAll['image'] = $product->image;
         $product->update($requestAll);
-        return response()->json(['book' => $product->refresh()->load('Category')], 201);
+        return response()->json(['category' => $product->refresh()->load('Category')], 201);
         // acá imagen otra direccion
         /*
         $this->uploadImages($request, $product);
