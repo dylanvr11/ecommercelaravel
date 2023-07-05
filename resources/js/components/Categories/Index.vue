@@ -1,12 +1,12 @@
 <template>
 	<div class="card mx-5 my-5">
 		<div class="card-header d-flex justify-content-between">
-			<h2>Productos</h2>
-			<button @click="openModal" class="btn btn-primary">Crear Producto</button>
+			<h2>Categorias</h2>
+			<button @click="openModal" class="btn btn-primary">Crear Categoria</button>
 		</div>
 		<div class="card-body">
 			<section class="table-responsive" v-if="load">
-				<table-component :products_data="products" />
+				<table-component :categories_data="categories" />
 			</section>
 
 			<!-- load -->
@@ -17,7 +17,7 @@
 			</section>
 		</div>
 		<section v-if="load_modal">
-			<modal :product_data="product" />
+			<modal :category_data="category" />
 		</section>
 	</div>
 </template>
@@ -33,11 +33,11 @@
 		},
 		data() {
 			return {
-				products: [],
+				categories: [],
 				load: false,
 				load_modal: false,
 				modal: null,
-				product: null
+				category: null
 			}
 		},
 		created() {
@@ -45,13 +45,13 @@
 		},
 		methods: {
 			async index() {
-				await this.getProducts()
+				await this.getCategories()
 			},
-			async getProducts() {
+			async getCategories() {
 				try {
 					this.load = false
-					const { data } = await axios.get('Products/GetAllProducts')
-					this.products = data.products
+					const { data } = await axios.get('Categories/GetAllCategories')
+					this.categories = data.categories
 					this.load = true
 				} catch (error) {
 					console.error(error)
@@ -60,23 +60,24 @@
 			openModal() {
 				this.load_modal = true
 				setTimeout(() => {
-					this.modal = new bootstrap.Modal(document.getElementById('product_modal'), {
+					this.modal = new bootstrap.Modal(document.getElementById('category_modal'), {
 						keyboard: false
 					})
 					this.modal.show()
-					const modal = document.getElementById('product_modal')
+					const modal = document.getElementById('category_modal')
 					modal.addEventListener('hidden.bs.modal', () => {
+						console.log('hola')
 						this.load_modal = false
-						this.product = null
+						this.category = null
 					})
 				}, 200)
 			},
 			closeModal() {
 				this.modal.hide()
-				this.getProducts()
+				this.getCategories()
 			},
-			editProduct(product) {
-				this.product = product
+			editCategory(category) {
+				this.category = category
 				this.openModal()
 			}
 		}

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -9,6 +11,19 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
+
+Route::get('/test', function(){
+    // Role::create(['name'=>'admin']); //primer ejecucion
+    //Role::create(['name'=>'user']); //segundo role
+
+    //Asignarle roles
+    $users = User::get();
+    foreach ($users as $user){
+        if($user->number_id == 1122334455) $user->assignRole('admin');
+        else $user->assignRole('user');
+    }
+
+});
 
 Route::view('/', 'home');
 
@@ -47,8 +62,11 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
 
 //Categories
 Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function(){
+    Route::get('/','showCategories')->name('categories');
     //Viene de la API
     Route::get('/GetAllCategories', 'getAllCategories');
+    Route::post('/SaveCategory', 'saveCategory');
+    Route::delete('/DeleteACategory/{Category}', 'deleteCategory');
 });
 
 // Auth -------------------

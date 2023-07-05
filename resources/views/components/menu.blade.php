@@ -46,6 +46,11 @@
                             >Productos
                             </a>
 
+                            {{-- Categories --}}
+                            <a class="dropdown-item" href="{{ route('categories') }}"
+                            >Categorias
+                            </a>
+
                             {{-- Logoout --}}
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

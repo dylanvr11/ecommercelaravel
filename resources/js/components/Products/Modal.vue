@@ -4,7 +4,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">
-						{{ `${is_create ? 'Crear' : 'Actualizar'} Libro` }}
+						{{ `${is_create ? 'Crear' : 'Actualizar'} Producto` }}
 					</h5>
 					<button
 						type="button"
@@ -147,7 +147,7 @@
 					swal.fire({
 						icon: 'success',
 						title: 'Felicidades!',
-						text: 'Producto almacedado!'
+						text: 'Producto almacenado!'
 					})
 					this.$parent.closeModal()
 				} catch (error) {
