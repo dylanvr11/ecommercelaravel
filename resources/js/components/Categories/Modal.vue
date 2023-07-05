@@ -51,7 +51,8 @@
 			return {
 				is_create: true,
 				categories: [],
-				category: {}
+				category: {},
+				error_request: null
 			}
 		},
 		created() {
@@ -67,23 +68,20 @@
 				this.category = { ...this.category_data }
 				this.is_create = false
 			},
-			loadFormData() {
-				const form_data = new FormData()
-				form_data.append('name', this.category.name)
-				return form_data
-			},
 			async getCategories() {
 				const { data } = await axios.get('Categories/GetAllCategories')
 				this.categories = data.categories
 			},
 			async storeCategory() {
 				try {
-					const category = this.loadFormData()
 					if (this.is_create) {
 						//console.log(this.book)
-						await axios.post('Categories/SaveCategory', category)
+						await axios.post('Categories/SaveCategory', this.category)
 					} else {
-						await axios.post(`Categories/UpdateCategory/${this.category.id}`, category)
+						await axios.post(
+							`Categories/UpdateCategory/${this.category.id}`,
+							this.category
+						)
 					}
 					swal.fire({
 						icon: 'success',
@@ -92,12 +90,22 @@
 					})
 					this.$parent.closeModal()
 				} catch (error) {
-					console.error(error)
-					swal.fire({
-						icon: 'error',
-						title: 'Oops...',
-						text: 'Algo salio mal!'
-					})
+					if (error.response.status == 422) {
+						this.error_request = error.response.data.message
+						//console.log(this.error_request)
+						swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: this.error_request
+						})
+					} else {
+						console.error(error)
+						swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Algo salio mal!'
+						})
+					}
 				}
 			}
 		}

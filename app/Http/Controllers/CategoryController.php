@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -19,13 +21,13 @@ class CategoryController extends Controller
 		return response()->json(['categories' => $categories], 200);
 	}
 
-    public function saveCategory(Request $request){
+    public function saveCategory(CreateCategoryRequest $request){
         $category = new Category($request->all());
         $category->save();
         return response()->json(['category' => $category], 200);
     }
 
-    public function updateCategory(Category $category, Request $request){
+    public function updateCategory(Category $category, UpdateCategoryRequest $request){
 
         $requestAll = $request->all();
         $category->update($requestAll);
