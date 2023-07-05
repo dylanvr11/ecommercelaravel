@@ -3,7 +3,7 @@
         <div class="card mx-5 my-5">
             <div class="card-header d-flex justify-content-between">
                 <h2>Users</h2>
-                <a href="{{route('user.create')}}" class="btn btn-primary">Crear usuario</a>
+                <a href="{{route('user.create')}}" class="btn btn-primary">Registrar usuario</a>
             </div>
             <div class="card-body">
                 <table class="table mx-3 my-4">

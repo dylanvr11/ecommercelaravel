@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -81,6 +82,11 @@ Route::group(['controller' => LoginController::class], function(){
 });
 
 // Regiter Routes ...
+Route::group(['controller' => RegisterController::class], function(){
+    Route::get('register', 'showRegistrationForm')->name('register');
+    Route::post('register', 'register');
+});
+
 
 // Password reset Routes ...
 Route::group(['controller' => ForgotPasswordController::class], function(){
