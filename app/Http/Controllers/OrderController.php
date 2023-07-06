@@ -13,4 +13,9 @@ class OrderController extends Controller
         $order->save();
         return response()->json(['order' => $order], 201);
     }
+
+    public function showCarts()
+    {
+        return view('carts.index');
+    }
 }

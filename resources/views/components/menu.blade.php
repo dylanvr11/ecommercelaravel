@@ -54,6 +54,11 @@
                             >Categorias
                             </a>
 
+                            {{-- Carts --}}
+                            <a class="dropdown-item" href="{{ route('carts') }}"
+                            >Carrito
+                            </a>
+
                             {{-- Logoout --}}
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

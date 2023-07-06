@@ -4,6 +4,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
@@ -69,6 +70,12 @@ Route::group(['prefix' => 'Categories', 'controller' => CategoryController::clas
     Route::post('/SaveCategory', 'saveCategory');
     Route::post('/UpdateCategory/{category}', 'updateCategory');
     Route::delete('/DeleteACategory/{category}', 'deleteCategory');
+});
+
+//Orders
+Route::group(['prefix' => 'Order', 'controller' => OrderController::class], function(){
+    Route::get('/','showCarts')->name('carts');
+    //Viene de la API
 });
 
 // Auth -------------------

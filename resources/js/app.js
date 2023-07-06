@@ -6,11 +6,13 @@ import vSelect from 'vue-select'
 import ExampleComponent from './components/ExampleComponent.vue'
 import ProductsList from './components/Products/Index.vue'
 import CategoriesList from './components/Categories/Index.vue'
+import CartsList from './components/Carts/Index.vue'
 const app = createApp({
 	components: {
 		ExampleComponent,
 		ProductsList,
-		CategoriesList
+		CategoriesList,
+		CartsList
 	}
 })
 
