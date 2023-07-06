@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -83,7 +84,7 @@ class UserController extends Controller
     }
     sin request
     */
-
+/*
     public function createUser(CreateUserRequest $request)
     {
         $user = new User($request->all());
@@ -91,6 +92,25 @@ class UserController extends Controller
         $user->save();
         if($request->ajax()) return response()->json(['user'=>$user], 201);
         return back()->with('success','Usuario Creado');
+    }
+sin transaccions
+    */
+    public function createUser(CreateUserRequest $request)
+    {
+        try{
+            DB::beginTransaction();
+            $user = new User($request->all());
+            $user->save();
+            $user->assignRole($request->role);
+            DB::commit();
+
+            if($request->ajax()) return response()->json(['user'=>$user], 201);
+            return back()->with('success','Usuario Creado');
+        }
+        catch (\Throwable $th){
+            DB::rollback();
+            throw $th;
+        }
     }
     /*
     public function updateUser(User $user, Request $request)
@@ -117,6 +137,7 @@ class UserController extends Controller
         return back()->with('success','Usuario Editado');
     }
 */
+/*
 //para que no me guarde la contraseña nula
     public function updateUser(User $user, UpdateUserRequest $request)
     {
@@ -134,7 +155,31 @@ class UserController extends Controller
         return back()->with('success','Usuario Editado');
 
     }
+*/
 
+public function updateUser(User $user, UpdateUserRequest $request)
+{
+
+    try{
+        DB::beginTransaction();
+        $allRequest = $request->all();
+        if(!isset($allRequest['password'])){
+            if(!$allRequest['password']) {
+                unset($allRequest['password']);
+            }
+        }
+        $user->update($allRequest);
+        $user->syncRoles([$request->role]);
+        DB::commit();
+
+        if($request->ajax()) return response()->json(['user' => $user->refresh()], 201);
+        return back()->with('success','Usuario editado');
+    }
+    catch (\Throwable $th){
+        DB::rollback();
+        throw $th;
+    }
+}
 
     // public function deleteUser(User $user, Request $request)
     // {
