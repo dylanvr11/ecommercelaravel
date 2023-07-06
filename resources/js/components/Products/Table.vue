@@ -1,5 +1,5 @@
 <template>
-	<table class="table">
+	<table class="table" id="ProductTable">
 		<thead>
 			<tr>
 				<th>Nombre</th>
@@ -35,6 +35,9 @@
 		},
 		created() {
 			this.index()
+		},
+		mounted() {
+			$('#ProductTable').DataTable()
 		},
 		methods: {
 			index() {
