@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function createOrder(Request $request)
+    public function createOrder(Request $request, Product $product)
     {
+        if($request->quantity>$product->stock){
+            return back()->with('errors','No hay la cantidad');
+        }
         $order = new Order($request->all());
-        dd($order);
+        $order->customer_user_id=Auth::user()->id;
+        $order->product_id=$product->id;
+        $order->price=$order->quantity*$product->price;
         $order->save();
-        if($request->ajax()) return response()->json(['order' => $order], 201);
+        //if($request->ajax()) return response()->json(['order' => $order], 201);
         return back()->with('success','Producto agregado');
     }
 

@@ -15,11 +15,12 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 
 Route::get('/test', function(){
-    // Role::create(['name'=>'admin']); //primer ejecucion
-    //Role::create(['name'=>'user']); //segundo role
+    /*
+    Role::create(['name'=>'admin']); //primer ejecucion
+    Role::create(['name'=>'user']); //segundo role
 
     //Asignarle roles
-/*
+
     $users = User::get();
     foreach ($users as $user){
         if($user->number_id == 1122334455) $user->assignRole('admin');
@@ -87,7 +88,7 @@ Route::group(['prefix' => 'Order', 'controller' => OrderController::class], func
     Route::get('/','showCarts')->name('carts');
     //Route::post('/CreateOrder', 'createOrder')->name('add.cart.post');
     //Viene de la API
-    Route::post('/CreateOrder', 'createOrder')->name('add.cart.post');
+    Route::post('/CreateOrder/{product}', 'createOrder')->name('add.cart.post');
     //Route::post('/CreateOrder/{order}', 'createOrder2')->name('add.cart.post');
 });
 

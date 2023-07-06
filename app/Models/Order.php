@@ -13,10 +13,8 @@ class Order extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'administrator_user_id',
         'customer_user_id',
         'product_id',
-        'date',
         'price',
         'quantity',
     ];
@@ -24,11 +22,6 @@ class Order extends Model
     public function Product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
-    }
-
-    public function Administrator()
-    {
-        return $this->belongsTo(User::class, 'administrator_user_id', 'id');
     }
 
     public function Customer()

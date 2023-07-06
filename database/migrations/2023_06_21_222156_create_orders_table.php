@@ -16,19 +16,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id')->unsigned(); //producto
-            $table->bigInteger('administrator_user_id')->unsigned();  //administrador
             $table->bigInteger('customer_user_id')->unsigned(); //cliente
-            $table->date('date');
-            //$table->enum('status',['pending', 'processing', 'shipped', 'delivered']); //si toca crearlo
             $table->integer('price');
             $table->integer('quantity');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('administrator_user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
 
             $table->foreign('customer_user_id')
                 ->references('id')
