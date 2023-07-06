@@ -2,32 +2,31 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Nombre</th>
+				<th>Precio</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(category, index) in categories" :key="index">
-				<th>{{ category.name }}</th>
+			<tr v-for="(order, index) in orders" :key="index">
+				<th>{{ order.price }}</th>
 				<td>
-					<button class="btn btn-warning me-2" @click="getCategory(category)">
-						Editar
-					</button>
-					<button class="btn btn-danger" @click="deleteCategory(category)">
-						Eliminar
-					</button>
+					<button class="btn btn-danger" @click="deleteOrder(order)">Eliminar</button>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<div>
+		<td>Precio Total:</td>
+		<td>{{ total }}</td>
+	</div>
 </template>
 
 <script>
 	export default {
-		props: ['categories_data'],
+		props: ['orders_data', 'total'],
 		//components: {},
 		data() {
 			return {
-				categories: []
+				orders: []
 			}
 		},
 		created() {
@@ -36,9 +35,9 @@
 		methods: {
 			index() {
 				// this.products = this.products_data
-				this.categories = [...this.categories_data]
+				this.orders = [...this.orders_data]
 			},
-			async getCategory(category) {
+			async getOrder(category) {
 				try {
 					//const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
 					// this.$parent.product = data.product
@@ -47,21 +46,21 @@
 					console.error(error)
 				}
 			},
-			async deleteCategory(category) {
+			async deleteOrder(order) {
 				try {
 					const result = await swal.fire({
 						icon: 'info',
-						title: 'Quiere eliminar el libro?',
+						title: 'Quiere eliminar el producto del carrito?',
 						showCancelButton: true,
 						confirmButtonText: 'Eliminar'
 					})
 					if (!result.isConfirmed) return
-					await axios.delete(`Categories/DeleteACategory/${category.id}`)
-					this.$parent.getCategories()
+					await axios.delete(`api/Orders/DeleteOrder/${order.id}`)
+					this.$parent.getOrders()
 					swal.fire({
 						icon: 'success',
 						title: 'Felicitaciones!',
-						text: 'Libro Eliminado!'
+						text: 'producto del carrito Eliminado!'
 					})
 				} catch (error) {
 					console.error(error)

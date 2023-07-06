@@ -36,7 +36,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Orders
 Route::group(['prefix' => 'Orders', 'controller' => OrderController::class], function(){
-    Route::post('/CreateOrder', 'createOrder');
+    Route::post('/CreateOrder', 'createOrder3');
+    Route::delete('/DeleteOrder/{order}','deleteOrder');
 });
 
 //Products

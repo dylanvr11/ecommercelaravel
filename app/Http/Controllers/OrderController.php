@@ -16,12 +16,26 @@ class OrderController extends Controller
         return back()->with('success','Producto agregado');
     }
 
+    public function createOrder3(Request $request)
+    {
+        $order = new Order($request->all());
+        $order->save();
+        if($request->ajax()) return response()->json(['order' => $order], 201);
+        return back()->with('success','Producto agregado');
+    }
+
     public function createOrder2(Order $order, Request $request)
     {
         dd($request);
         $order->save();
         if($request->ajax()) return response()->json(['order' => $order], 201);
         return back()->with('success','Producto agregado');
+    }
+
+    public function deleteOrder(Order $order, Request $request)
+    {
+        $order->delete();
+        return response()->json([], 204);
     }
 /*
     public function createUser(Request $request)

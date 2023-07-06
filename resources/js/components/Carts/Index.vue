@@ -4,8 +4,14 @@
 			<h2>Carrito de compra</h2>
 		</div>
 		<div class="card-body">
-			<section @click="openModal">
-				<modal />
+			<section class="table-responsive" v-if="load">
+				<table-component :orders_data="orders" :total="total_price" />
+			</section>
+			<!-- load -->
+			<section v-else class="d-flex justify-content-center my-3">
+				<div class="spinner-border" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
 			</section>
 		</div>
 	</div>
@@ -13,20 +19,17 @@
 
 <script>
 	import TableComponent from './Table.vue'
-	import Modal from './Modal.vue'
 	export default {
 		props: [],
 		components: {
-			TableComponent,
-			Modal
+			TableComponent
 		},
 		data() {
 			return {
-				categories: [],
+				orders: [],
+				total_price: 0,
 				load: false,
-				load_modal: false,
-				modal: null,
-				category: null
+				order: null
 			}
 		},
 		created() {
@@ -34,40 +37,24 @@
 		},
 		methods: {
 			async index() {
-				await this.getCategories()
+				await this.getOrders()
 			},
-			async getCategories() {
+			async getOrders() {
 				try {
 					this.load = false
-					const { data } = await axios.get('Categories/GetAllCategories')
-					this.categories = data.categories
+					const { data } = await axios.get('api/Users/GetAllOrdersByUser/3')
+					this.orders = data.customer_orders
+					await this.calculationPrice()
+					//console.log(total_price)
 					this.load = true
 				} catch (error) {
 					console.error(error)
 				}
 			},
-			openModal() {
-				this.load_modal = true
-				setTimeout(() => {
-					this.modal = new bootstrap.Modal(document.getElementById('carts_modal'), {
-						keyboard: false
-					})
-					this.modal.show()
-					const modal = document.getElementById('carts_modal')
-					modal.addEventListener('hidden.bs.modal', () => {
-						console.log('hola')
-						this.load_modal = false
-						this.category = null
-					})
-				}, 200)
-			},
-			closeModal() {
-				this.modal.hide()
-				this.getCategories()
-			},
-			editCategory(category) {
-				this.category = category
-				this.openModal()
+			async calculationPrice() {
+				this.total_price = this.orders.reduce((accumulator, order) => {
+					return accumulator + order.price
+				}, 0)
 			}
 		}
 	}
