@@ -73,6 +73,7 @@ Route::group(['prefix' => 'Categories', 'controller' => CategoryController::clas
     Route::post('/SaveCategory', 'saveCategory');
     Route::get('/GetAllProductsByCategory/{category}', 'getAllProductsByCategory');
     Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
+    Route::get('/GetFiveProductsByCategories', 'getFiveProductsByCategories');
     Route::get('/GetAllProductsByCategory/{category}', 'showCategoryWithProducts')->name('category.get');
     Route::post('/UpdateCategory/{category}', 'updateCategory');
     Route::delete('/DeleteACategory/{category}', 'deleteCategory');

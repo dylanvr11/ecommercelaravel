@@ -53,6 +53,14 @@ class CategoryController extends Controller
         return response()->json(['categories' => $products ], 200);
     }
 
+    public function getFiveProductsByCategories()
+    {
+        $categories = Category::with(['products' => function ($query) {
+            $query->where('stock', '>', 0)->take(5);
+        }])->get();
+        return response()->json(['categories' => $categories], 200);
+    }
+
 
     public function showCategoryWithProducts(Category $category)
     {
@@ -72,6 +80,6 @@ class CategoryController extends Controller
     {
         $categories = $this->getAllProductsByCategories()->original['categories'];
         //dd($categories);
-        return view('index2', compact('categories'));
+        return view('index3', compact('categories'));
     }
 }
