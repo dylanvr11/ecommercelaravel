@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
@@ -79,7 +80,19 @@ class CategoryController extends Controller
     public function showHomeCategoriesWithProducts()
     {
         $categories = $this->getAllProductsByCategories()->original['categories'];
+        //cosas nuevas
+        $order = new Order();
         //dd($categories);
-        return view('index3', compact('categories'));
+        return view('index3', compact('categories', 'order'));
     }
+/*
+    public function showHomeCategoriesWithProducts()
+    {
+        $categories = $this->getAllProductsByCategories()->original['categories'];
+        //cosas nuevas
+        $order = new Category($request->all());
+        //dd($categories);
+        return view('index3', compact('categories', 'order'));
+    }
+    */
 }

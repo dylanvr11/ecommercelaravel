@@ -61,7 +61,7 @@
 					swal.fire({
 						icon: 'success',
 						title: 'Felicitaciones!',
-						text: 'Categoria Eliminado!'
+						text: 'Libro Eliminado!'
 					})
 				} catch (error) {
 					console.error(error)

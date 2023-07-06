@@ -39,6 +39,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        @role('admin')
                             {{-- Users --}}
                             <a class="dropdown-item" href="{{ route('users') }}"
                                 >Usuarios
@@ -53,7 +54,7 @@
                             <a class="dropdown-item" href="{{ route('categories') }}"
                             >Categorias
                             </a>
-
+                        @endrole
                             {{-- Carts --}}
                             <a class="dropdown-item" href="{{ route('carts') }}"
                             >Carrito

@@ -19,11 +19,13 @@ Route::get('/test', function(){
     //Role::create(['name'=>'user']); //segundo role
 
     //Asignarle roles
+/*
     $users = User::get();
     foreach ($users as $user){
         if($user->number_id == 1122334455) $user->assignRole('admin');
         else $user->assignRole('user');
     }
+*/
 
 });
 
@@ -32,7 +34,7 @@ Route::get('/test', function(){
 //Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
 // Users
-Route::group(['prefix' => 'Users', 'controller' => UserController::class], function(){
+Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin'], 'controller' => UserController::class], function(){
     Route::get('/','showAllUsers')->name('users');
     Route::get('/CreateUser','showCreateUser')->name('user.create');
     Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
@@ -44,7 +46,7 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
 
 
 // Products
-Route::group(['prefix' => 'Products', 'controller' => ProductController::class], function(){
+Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',], 'controller' => ProductController::class], function(){
     Route::get('/','showProducts')->name('products');
     //viene de la API
     Route::get('/GetAllProducts', 'getAllProducts');
@@ -66,7 +68,7 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
 });
 
 //Categories
-Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function(){
+Route::group(['prefix' => 'Categories', 'middleware' => ['auth','role:admin|user'], 'controller' => CategoryController::class], function(){
     Route::get('/','showCategories')->name('categories');
     //Viene de la API
     Route::get('/GetAllCategories', 'getAllCategories');
@@ -82,7 +84,10 @@ Route::group(['prefix' => 'Categories', 'controller' => CategoryController::clas
 //Orders
 Route::group(['prefix' => 'Order', 'controller' => OrderController::class], function(){
     Route::get('/','showCarts')->name('carts');
+    //Route::post('/CreateOrder', 'createOrder')->name('add.cart.post');
     //Viene de la API
+    Route::post('/CreateOrder', 'createOrder')->name('add.cart.post');
+    //Route::post('/CreateOrder/{order}', 'createOrder2')->name('add.cart.post');
 });
 
 // Auth -------------------

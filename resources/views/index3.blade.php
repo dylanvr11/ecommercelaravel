@@ -21,7 +21,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{$product->name}}</h5>
                             <p class="card-text">{{$product->description}}</p>
-                            <a href="#" class="btn btn-primary">Comprar</a>
+                            <form action="{{route('add.cart.post')}}" method="post">
+                            {{-- <form action="{{route('add.cart.post', ['order' => $order->id])}}" method="post"> --}}
+                                @csrf
+                                {{-- <h1>{{$order->administrator_user_id=1}}</h1>
+                                <h1>{{$order->customer_user_id=auth()->id()}}</h1>
+                                <h1>{{$order->price=$product->price}}</h1>
+                                <h1>{{$order->product_id=$product->id}}</h1>
+                                <h1>{{$order->quantity=1}}</h1>
+                                <h1>{{$order}}</h1> --}}
+                                <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
+                            </form>
                         </div>
                 </div>
             </a>

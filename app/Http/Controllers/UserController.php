@@ -68,6 +68,7 @@ class UserController extends Controller
     public function createUser(CreateUserRequest $request)
     {
         $user = new User($request->all());
+        //dd($request);
         $user->save();
         if($request->ajax()) return response()->json(['user'=>$user], 201);
         return back()->with('success','Usuario Creado');
