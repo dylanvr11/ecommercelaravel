@@ -43,6 +43,7 @@ Route::group(['prefix' => 'Orders', 'controller' => OrderController::class], fun
 Route::group(['prefix' => 'Products', 'controller' => ProductController::class], function(){
     Route::get('/GetAllProducts', 'getAllProducts');
     Route::post('/SaveProduct','saveProduct');
+    Route::get('/GetAProduct/{product}', 'getAProduct');
 });
 
 //Categories

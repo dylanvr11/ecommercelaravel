@@ -1,12 +1,8 @@
 <x-app title="Ecommerce">
     {{-- A product --}}
     <section class="d-flex justify-content-center flex-wrap">
-        @foreach ($categories as $category)
             <div class="container mt-2">
                 <h1>{{$category->name}}</h1>
-            </div>
-            <div>
-                <a href="{{route('category.get',['category' => $category->id])}}" class="btn btn-primary mx-2">Ver mas</a>
             </div>
             @foreach ($category->Products as $product)
                 <div class="card mx-3 my-3" style="width: 18rem;">
@@ -23,6 +19,5 @@
                     </div>
             @endforeach
             <hr>
-        @endforeach
     </section>
 </x-app>

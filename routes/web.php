@@ -27,7 +27,7 @@ Route::get('/test', function(){
 
 });
 
-Route::view('/', 'home');
+//Route::view('/', 'home');
 
 //Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
@@ -50,6 +50,7 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
     Route::get('/GetAllProducts', 'getAllProducts');
     Route::post('/SaveProduct', 'saveProduct');
     Route::get('/GetAProduct/{product}', 'getAProduct');
+    //Route::get('/GetAProduct', 'showCategoryWithProducts')->name('category.get');
     // Route::put('/UpdateProduct/{product}', 'updateProduct');
     Route::post('/UpdateProduct/{product}', 'updateProduct');
     Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
@@ -68,6 +69,9 @@ Route::group(['prefix' => 'Categories', 'controller' => CategoryController::clas
     //Viene de la API
     Route::get('/GetAllCategories', 'getAllCategories');
     Route::post('/SaveCategory', 'saveCategory');
+    Route::get('/GetAllProductsByCategory/{category}', 'getAllProductsByCategory');
+    Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
+    Route::get('/GetAllProductsByCategory/{category}', 'showCategoryWithProducts')->name('category.get');
     Route::post('/UpdateCategory/{category}', 'updateCategory');
     Route::delete('/DeleteACategory/{category}', 'deleteCategory');
 });

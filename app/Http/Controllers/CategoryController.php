@@ -43,7 +43,7 @@ class CategoryController extends Controller
     public function getAllProductsByCategory(Category $category)
     {
         $products = $category->load('Products');
-        return response()->json(['products' => $products ], 200);
+        return response()->json(['category' => $products ], 200);
     }
 
     public function getAllProductsByCategories()
@@ -52,6 +52,21 @@ class CategoryController extends Controller
         $products = $categories->load('Products');
         return response()->json(['categories' => $products ], 200);
     }
+
+
+    public function showCategoryWithProducts(Category $category)
+    {
+        $products = $this->getAllProductsByCategory($category);
+        return view('home.index', compact('category'));
+    }
+
+/*
+    public function showCategoryWithProducts()
+    {
+        //$products = $this->getAllProductsByCategory($category);
+        return view('home.index');
+    }
+*/
 
     public function showHomeCategoriesWithProducts()
     {

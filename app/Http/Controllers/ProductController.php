@@ -36,7 +36,7 @@ class ProductController extends Controller
     }
 
     public function getAProduct(Product $product){
-        $product->load('Category');
+        //$product->load('Category');
         return response()->json(['product' => $product],200);
     }
 
