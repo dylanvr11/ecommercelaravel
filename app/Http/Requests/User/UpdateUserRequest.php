@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
 			'number_id' => ['required', 'numeric', "unique:users,number_id,{$this->user->id}"],
 			'email' => ['required', 'email', "unique:users,email,{$this->user->id}"],
 			'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-			//'role' => ['required'],
+			'role' => ['required'],
 		];
 	}
 
