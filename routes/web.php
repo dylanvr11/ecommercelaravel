@@ -54,6 +54,8 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
     // Route::put('/UpdateProduct/{product}', 'updateProduct');
     Route::post('/UpdateProduct/{product}', 'updateProduct');
     Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+    Route::get('/GetAProductWithCategory/{product}','getAProductWithCategory');
+    Route::get('/GetAProductWithCategory/{product}','showProductWithCategory')->name('product.get');;
 
 
     Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable

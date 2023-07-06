@@ -40,6 +40,18 @@ class ProductController extends Controller
         return response()->json(['product' => $product],200);
     }
 
+
+    public function getAProductWithCategory(Product $product){
+        $product->load('Category')->Category();
+        return response()->json(['product' => $product],200);
+    }
+
+    public function showProductWithCategory(Product $product){
+        $product=$this->getAProductWithCategory($product)->original['product'];
+        //dd($product);
+        return view('product.index',compact('product'));
+    }
+
     public function updateProduct(Product $product, UpdateProductRequest $request){
 
         $requestAll = $request->all();

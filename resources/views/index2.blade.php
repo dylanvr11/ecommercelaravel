@@ -9,6 +9,7 @@
                 <a href="{{route('category.get',['category' => $category->id])}}" class="btn btn-primary mx-2">Ver mas</a>
             </div>
             @foreach ($category->Products as $product)
+            <a href="{{ route('product.get',['product' => $product->id]) }}">
                 <div class="card mx-3 my-3" style="width: 18rem;">
                     @if($product->image)
                         <img src="/storage/images/{{$product->image}}"         class="card-img-top" alt="Libro">
@@ -20,7 +21,8 @@
                             <p class="card-text">{{$product->description}}</p>
                             <a href="#" class="btn btn-primary">Comprar</a>
                         </div>
-                    </div>
+                </div>
+            </a>
             @endforeach
             <hr>
         @endforeach
