@@ -1,5 +1,5 @@
 <template>
-	<table class="table" id="ProductTable">
+	<table class="table" id="ProductTable" v-if="load">
 		<thead>
 			<tr>
 				<th>Nombre</th>
@@ -29,7 +29,8 @@
 		//components: {},
 		data() {
 			return {
-				products: []
+				products: [],
+				load: false
 			}
 		},
 		created() {
@@ -42,12 +43,16 @@
 			},
 			async getProducts() {
 				try {
+					this.load = false
 					const { data } = await axios.get('Products/GetAllProducts')
 					this.products = data.products
+					this.load = true
 				} catch (error) {
 					console.error(error)
 				}
-				$('#ProductTable').DataTable()
+				setTimeout(() => {
+					$('#ProductTable').DataTable()
+				}, 200)
 			},
 			async getProduct(product) {
 				try {
