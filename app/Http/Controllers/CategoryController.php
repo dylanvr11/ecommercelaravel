@@ -69,14 +69,6 @@ class CategoryController extends Controller
         return view('home.index', compact('category'));
     }
 
-/*
-    public function showCategoryWithProducts()
-    {
-        //$products = $this->getAllProductsByCategory($category);
-        return view('home.index');
-    }
-*/
-
     public function showHomeCategoriesWithProducts()
     {
         $categories = $this->getAllProductsByCategories()->original['categories'];
@@ -85,14 +77,4 @@ class CategoryController extends Controller
         //dd($categories);
         return view('index', compact('categories', 'order'));
     }
-/*
-    public function showHomeCategoriesWithProducts()
-    {
-        $categories = $this->getAllProductsByCategories()->original['categories'];
-        //cosas nuevas
-        $order = new Category($request->all());
-        //dd($categories);
-        return view('index3', compact('categories', 'order'));
-    }
-    */
 }
