@@ -25,7 +25,6 @@
 <script>
 	export default {
 		props: ['orders_data', 'total'],
-		//components: {},
 		data() {
 			return {
 				orders: []
@@ -41,8 +40,6 @@
 			},
 			async getOrder(category) {
 				try {
-					//const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
-					// this.$parent.product = data.product
 					this.$parent.editCategory(category)
 				} catch (error) {
 					console.error(error)

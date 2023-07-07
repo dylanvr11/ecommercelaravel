@@ -45,7 +45,6 @@
 					const { data } = await axios.get('api/Users/GetAllOrdersByUser/3')
 					this.orders = data.customer_orders
 					await this.calculationPrice()
-					//console.log(total_price)
 					this.load = true
 				} catch (error) {
 					console.error(error)
