@@ -32,7 +32,7 @@ Route::get('/test', function(){
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
 
 // Users
-Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin'], 'controller' => UserController::class], function(){
+Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin|user'], 'controller' => UserController::class], function(){
     Route::get('/','showAllUsers')->name('users');
     Route::get('/CreateUser','showCreateUser')->name('user.create');
     Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
@@ -68,7 +68,7 @@ Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',
 });
 
 //Categories
-Route::group(['prefix' => 'Categories', 'middleware' => ['auth','role:admin|user'], 'controller' => CategoryController::class], function(){
+Route::group(['prefix' => 'Categories','middleware' => ['auth','role:admin|user'], 'controller' => CategoryController::class], function(){
     Route::get('/','showCategories')->name('categories');
     //Viene de la API
     Route::get('/GetAllCategories', 'getAllCategories');
@@ -82,7 +82,7 @@ Route::group(['prefix' => 'Categories', 'middleware' => ['auth','role:admin|user
 });
 
 //Orders
-Route::group(['prefix' => 'Order', 'controller' => OrderController::class], function(){
+Route::group(['prefix' => 'Order', 'middleware' => ['auth'], 'controller' => OrderController::class], function(){
     Route::get('/','showCarts')->name('carts');
     //Viene de la API
     Route::post('/CreateOrder/{product}', 'createOrder')->name('add.cart.post');
