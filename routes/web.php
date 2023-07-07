@@ -27,13 +27,12 @@ Route::get('/test', function(){
         else $user->assignRole('user');
     }
 */
-
 });
 
 //Route::view('/', 'home');
 
-//Route::get('/',[ProductController::class, 'showHomeWithProducts'])->name('home');
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
+
 // Users
 Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin'], 'controller' => UserController::class], function(){
     Route::get('/','showAllUsers')->name('users');
@@ -55,8 +54,7 @@ Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',
     Route::get('/GetAllBooksDataTable', 'getAllProducts');
     Route::post('/SaveProduct', 'saveProduct');
     Route::get('/GetAProduct/{product}', 'getAProduct');
-    //Route::get('/GetAProduct', 'showCategoryWithProducts')->name('category.get');
-    // Route::put('/UpdateProduct/{product}', 'updateProduct');
+
     Route::post('/UpdateProduct/{product}', 'updateProduct');
     Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
     Route::get('/GetAProductWithCategory/{product}','getAProductWithCategory');
@@ -87,10 +85,8 @@ Route::group(['prefix' => 'Categories', 'middleware' => ['auth','role:admin|user
 //Orders
 Route::group(['prefix' => 'Order', 'controller' => OrderController::class], function(){
     Route::get('/','showCarts')->name('carts');
-    //Route::post('/CreateOrder', 'createOrder')->name('add.cart.post');
     //Viene de la API
     Route::post('/CreateOrder/{product}', 'createOrder')->name('add.cart.post');
-    //Route::post('/CreateOrder/{order}', 'createOrder2')->name('add.cart.post');
 });
 
 // Auth -------------------

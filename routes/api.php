@@ -17,6 +17,9 @@ use App\Http\Controllers\CategoryController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+//Users
+
 Route::group(['prefix' => 'Users', 'controller' => UserController::class], function(){
     Route::get('/GetAllUsers', 'getAllUsers'); //GET -> traer data
     Route::get('/GetAnUser/{user}', 'getAnUser'); //GET -> traer data
@@ -27,12 +30,6 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
     Route::put('/UpdateUser/{user}', 'updateUser'); //PUT -> Actualiza data
     Route::delete('/DeleteUser/{user}', 'deleteUser'); //DELETE -> Elimina data
 });
-
-/*
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-*/
 
 // Orders
 Route::group(['prefix' => 'Orders', 'controller' => OrderController::class], function(){
