@@ -39,10 +39,12 @@
 			async index() {
 				await this.getOrders()
 			},
+			//async getOrders()
 			async getOrders() {
 				try {
 					this.load = false
-					const { data } = await axios.get('api/Users/GetAllOrdersByUser/3')
+					const { data } = await axios.get('Users/GetAllOrdersByUserAuth')
+					//const { data } = await axios.get('api/Users/GetAllOrdersByUser/3')
 					this.orders = data.customer_orders
 					await this.calculationPrice()
 					this.load = true

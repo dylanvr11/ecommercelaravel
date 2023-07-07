@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 
@@ -41,7 +42,18 @@ class UserController extends Controller
     public function getAllOrdersByUser(User $user)
     {
         $CustomerOrders = $user->load('CustomerOrders.Product.Category')->CustomerOrders;
+        //dd(Auth::user()->id);
         return response()->json(['customer_orders' => $CustomerOrders],200);
+    }
+
+    public function getAllOrdersByUserAuth()
+    {
+        $userId =  Auth::user()->id;
+        $customerOrders = User::findOrFail($userId)
+            ->load('CustomerOrders.Product.Category')
+            ->CustomerOrders;
+
+        return response()->json(['customer_orders' => $customerOrders], 200);
     }
 
     public function getAnUser(User $user)

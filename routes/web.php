@@ -40,6 +40,8 @@ Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin'], 'contr
     Route::post('/CreateUser','createUser')->name('user.create.post');
     Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
     Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
+    Route::get('/GetAllOrdersByUser/{user}', 'getAllOrdersByUser');
+    Route::get('/GetAllOrdersByUserAuth', 'getAllOrdersByUserAuth');
 
 });
 
