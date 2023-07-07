@@ -11,3 +11,46 @@
 @import 'vue-select/dist/vue-select.css';
 
 @import '~/datatables.net-bs5/css/dataTables.bootstrap5.min';
+
+// _variables.scss
+$primary-color: #999933;
+$secondary-color: #c9cabf;
+$primary-color1: #336699;
+$heading-font-size1: 28px;
+// styles.scss
+@import 'variables';
+
+body {
+	background-color: $secondary-color;
+	color: $primary-color;
+}
+
+.category-heading {
+	font-size: $heading-font-size1;
+	color: $primary-color1;
+	margin-bottom: 10px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.navbar-brand {
+	color: #336699;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+.nav-item {
+	color: #336699;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}

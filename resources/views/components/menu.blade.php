@@ -1,5 +1,6 @@
 {{-- Menu  --}}
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+{{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background-color: #e3f2fd;"> --}}
+<nav class="navbar navbar-light" style="background-color: #f1e917;">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             Ecommerce

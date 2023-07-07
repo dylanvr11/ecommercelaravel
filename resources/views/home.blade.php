@@ -5,7 +5,7 @@
             @if (count($category->Products)!=0)
             <div class="container mt-2">
                 <a href="{{ route('category.get', ['category' => $category->id]) }}">
-                    <h1>{{ $category->name }}</h1>
+                    <h1 class="category-heading">{{ $category->name }}</h1>
                 </a>
             </div>
             @foreach ($category->Products->where('stock', '>', 0)->take(4) as $product)
