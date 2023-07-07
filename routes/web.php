@@ -79,17 +79,23 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
 });
 
 //Categories
-Route::group(['prefix' => 'Categories','middleware' => ['auth'], 'controller' => CategoryController::class], function(){
-    Route::get('/','showCategories')->name('categories');
-    //Viene de la API
-    Route::get('/GetAllCategories', 'getAllCategories');
-    Route::post('/SaveCategory', 'saveCategory');
+Route::group(['prefix' => 'Categories', 'controller' => CategoryController::class], function(){
+
+
     Route::get('/GetAllProductsByCategory/{category}', 'getAllProductsByCategory');
-    Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
-    Route::get('/GetFiveProductsByCategories', 'getFiveProductsByCategories');
     Route::get('/GetAllProductsByCategory/{category}', 'showCategoryWithProducts')->name('category.get');
-    Route::post('/UpdateCategory/{category}', 'updateCategory');
-    Route::delete('/DeleteACategory/{category}', 'deleteCategory');
+
+    Route::group(['middleware' => ['auth','role:admin']], function(){
+        Route::get('/','showCategories')->name('categories');
+        //Viene de la API
+        Route::get('/GetAllCategories', 'getAllCategories');
+        Route::post('/SaveCategory', 'saveCategory');
+
+        Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
+        Route::get('/GetFiveProductsByCategories', 'getFiveProductsByCategories');
+        Route::post('/UpdateCategory/{category}', 'updateCategory');
+        Route::delete('/DeleteACategory/{category}', 'deleteCategory');
+    });
 
 });
 
