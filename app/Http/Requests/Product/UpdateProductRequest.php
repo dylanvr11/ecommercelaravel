@@ -29,7 +29,6 @@ class UpdateProductRequest extends FormRequest
             'stock' => ['required', 'numeric'],
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric'],
-			//'role' => ['required'],
 		];
     }
     public function messages()

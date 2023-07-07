@@ -3,11 +3,13 @@
 		<thead>
 			<tr>
 				<th>Precio</th>
+				<th>Cantidad</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr v-for="(order, index) in orders" :key="index">
 				<th>{{ order.price }}</th>
+				<th>{{ order.quantity }}</th>
 				<td>
 					<button class="btn btn-danger" @click="deleteOrder(order)">Eliminar</button>
 				</td>

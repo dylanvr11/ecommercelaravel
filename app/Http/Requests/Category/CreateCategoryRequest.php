@@ -25,7 +25,6 @@ class CreateCategoryRequest extends FormRequest
     {
 		return [
 			'name' => ['required', 'string'],
-			//'role' => ['required'],
 		];
     }
     public function messages()
