@@ -5,10 +5,7 @@
         @foreach ($roles as $role)
             <option value="{{$role}}">{{$role}}</option>
         @endforeach
-        {{-- esto no sirve hasta donde iba selected="{{isset($user)?($role == $user .>roles[0]->name ? true : false): false}}" --}}
     </select>
-    {{-- <input type="text" name="role" class="form-control @error('role') is-invalid @enderror"
-    value="{{old('role')? old('role'): (isset($user)? $user->role: '')}}"> --}}
     @error('role')
         <span class="invalid-feedback" role='alert'>
             <strong>{{ $message }}</strong>
