@@ -52,6 +52,7 @@ Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',
     Route::get('/','showProducts')->name('products');
     //viene de la API
     Route::get('/GetAllProducts', 'getAllProducts');
+    Route::get('/GetAllBooksDataTable', 'getAllProducts');
     Route::post('/SaveProduct', 'saveProduct');
     Route::get('/GetAProduct/{product}', 'getAProduct');
     //Route::get('/GetAProduct', 'showCategoryWithProducts')->name('category.get');

@@ -1,26 +1,14 @@
 <template>
-	<table class="table" id="ProductTable" v-if="load">
+	<table class="table" id="productTable" v-if="load">
 		<thead>
 			<tr>
 				<th>Nombre</th>
 				<th>Stock</th>
-				<th>Descripcion</th>
 				<th>Precio</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr v-for="(product, index) in products" :key="index">
-				<th>{{ product.name }}</th>
-				<td>{{ product.stock }}</td>
-				<td>{{ product.price }}</td>
-				<td>
-					<button class="btn btn-warning me-2" @click="getProduct(product)">
-						Editar
-					</button>
-					<button class="btn btn-danger" @click="deleteProduct(product)">Eliminar</button>
-				</td>
-			</tr>
-		</tbody>
+		<tbody></tbody>
 	</table>
 </template>
 
@@ -30,29 +18,46 @@
 		data() {
 			return {
 				products: [],
-				load: false
+				load: true
 			}
 		},
-		created() {
+		mounted() {
 			this.index()
 		},
-		mounted() {},
 		methods: {
 			async index() {
-				await this.getProducts()
+				//await this.getProducts()
+				this.mountDataTable()
 			},
 			async getProducts() {
 				try {
 					this.load = false
 					const { data } = await axios.get('Products/GetAllProducts')
 					this.products = data.products
+					console.log(this.products)
 					this.load = true
 				} catch (error) {
 					console.error(error)
 				}
-				setTimeout(() => {
-					$('#ProductTable').DataTable()
-				}, 200)
+				this.mountDataTable()
+			},
+			mountDataTable() {
+				$('#productTable').DataTable({
+					Processing: true,
+					serverSide: true,
+					ajax: {
+						url: '/Products/GetAllBooksDataTable'
+					},
+					columns: [
+						{ data: 'name' },
+						{ data: 'stock' },
+						{ data: 'price' },
+						{ data: 'action' }
+					],
+					error: function (xhr, error, code) {
+						console.log(xhr, code)
+					}
+				})
 			},
 			async getProduct(product) {
 				try {
