@@ -63,17 +63,6 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    /*
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
-    */
     protected function create(array $data)
     {
         $user = User::create([
@@ -83,8 +72,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-    $user->assignRole('user'); // Replace 'role_name' with the actual role name or identifier
+        $user->assignRole('user'); // Replace 'role_name' with the actual role name or identifier
 
-    return $user;
-}
+        return $user;
+    }
 }
