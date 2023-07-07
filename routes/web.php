@@ -29,8 +29,6 @@ Route::get('/test', function(){
 */
 });
 
-//Route::view('/', 'home');
-
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
 
 // Users
@@ -44,7 +42,6 @@ Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin'], 'contr
     Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
 
 });
-
 
 // Products
 Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',], 'controller' => ProductController::class], function(){
