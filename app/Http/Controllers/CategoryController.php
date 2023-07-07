@@ -83,7 +83,7 @@ class CategoryController extends Controller
         //cosas nuevas
         $order = new Order();
         //dd($categories);
-        return view('index3', compact('categories', 'order'));
+        return view('index', compact('categories', 'order'));
     }
 /*
     public function showHomeCategoriesWithProducts()
