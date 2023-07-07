@@ -1,5 +1,5 @@
 <template>
-	<table class="table" id="productTable" v-if="load">
+	<table class="table" id="productTable" @click="getEvent">
 		<thead>
 			<tr>
 				<th>Nombre</th>
@@ -18,7 +18,7 @@
 		data() {
 			return {
 				products: [],
-				load: true
+				datatable: {}
 			}
 		},
 		mounted() {
@@ -26,23 +26,10 @@
 		},
 		methods: {
 			async index() {
-				//await this.getProducts()
-				this.mountDataTable()
-			},
-			async getProducts() {
-				try {
-					this.load = false
-					const { data } = await axios.get('Products/GetAllProducts')
-					this.products = data.products
-					console.log(this.products)
-					this.load = true
-				} catch (error) {
-					console.error(error)
-				}
 				this.mountDataTable()
 			},
 			mountDataTable() {
-				$('#productTable').DataTable({
+				this.datatable = $('#productTable').DataTable({
 					Processing: true,
 					serverSide: true,
 					ajax: {
@@ -59,26 +46,46 @@
 					}
 				})
 			},
-			async getProduct(product) {
+			async getProducts() {
 				try {
-					//const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
-					// this.$parent.product = data.product
-					this.$parent.editProduct(product)
+					const { data } = await axios.get('Products/GetAllProducts')
+					this.products = data.products
+				} catch (error) {
+					console.error(error)
+				}
+				this.mountDataTable()
+			},
+			getEvent(event) {
+				const button = event.target
+				if (button.getAttribute('role') == 'edit') {
+					this.getProduct(button.getAttribute('data-id'))
+				}
+				if (button.getAttribute('role') == 'delete') {
+					this.deleteProduct(button.getAttribute('data-id'))
+				}
+			},
+			async getProduct(product_id) {
+				try {
+					this.datatable.destroy()
+					const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
+					this.$parent.editProduct(data.product)
+					this.index()
 				} catch (error) {
 					console.error(error)
 				}
 			},
-			async deleteProduct(product) {
+			async deleteProduct(product_id) {
 				try {
 					const result = await swal.fire({
 						icon: 'info',
-						title: 'Quiere eliminar el libro?',
+						title: 'Quiere eliminar el producto?',
 						showCancelButton: true,
 						confirmButtonText: 'Eliminar'
 					})
 					if (!result.isConfirmed) return
-					await axios.delete(`Products/DeleteAProduct/${product.id}`)
-					this.$parent.getProducts()
+					this.datatable.destroy()
+					await axios.delete(`Products/DeleteAProduct/${product_id}`)
+					this.index()
 					swal.fire({
 						icon: 'success',
 						title: 'Felicitaciones!',
