@@ -11,8 +11,8 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request, Product $product)
     {
-        if($request->quantity>$product->stock){
-            return back()->with('error','No hay la cantidad');
+        if($request->quantity>$product->stock || $request->quantity==0){
+            return back()->with('error','Agregue un valor valido');
         }
         $order = new Order($request->all());
         $order->customer_user_id=Auth::user()->id;
