@@ -37,7 +37,7 @@ Route::group(['prefix' => 'Users', 'middleware' => ['auth'], 'controller' => Use
     Route::get('/GetAllOrdersByUser/{user}', 'getAllOrdersByUser');
     Route::get('/GetAllOrdersByUserAuth', 'getAllOrdersByUserAuth');
 
-    Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin']],function(){
+    Route::group(['middleware' => ['auth','role:admin']],function(){
         Route::get('/','showAllUsers')->name('users');
         Route::get('/CreateUser','showCreateUser')->name('user.create');
         Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
@@ -49,7 +49,7 @@ Route::group(['prefix' => 'Users', 'middleware' => ['auth'], 'controller' => Use
 });
 
 // Products
-Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',], 'controller' => ProductController::class], function(){
+Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user'], 'controller' => ProductController::class], function(){
     Route::get('/','showProducts')->name('products');
     //viene de la API
     Route::get('/GetAllProducts', 'getAllProducts');
