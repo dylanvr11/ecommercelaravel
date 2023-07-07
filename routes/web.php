@@ -49,24 +49,32 @@ Route::group(['prefix' => 'Users', 'middleware' => ['auth'], 'controller' => Use
 });
 
 // Products
-Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user'], 'controller' => ProductController::class], function(){
-    Route::get('/','showProducts')->name('products');
-    //viene de la API
-    Route::get('/GetAllProducts', 'getAllProducts');
-    Route::get('/GetAllBooksDataTable', 'getAllProducts');
-    Route::post('/SaveProduct', 'saveProduct');
-    Route::get('/GetAProduct/{product}', 'getAProduct');
+Route::group(['prefix' => 'Products', 'controller' => ProductController::class], function(){
 
-    Route::post('/UpdateProduct/{product}', 'updateProduct');
-    Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+
     Route::get('/GetAProductWithCategory/{product}','getAProductWithCategory');
     Route::get('/GetAProductWithCategory/{product}','showProductWithCategory')->name('product.get');;
 
 
-    Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
-    Route::get('/GetABook/{book}', 'getABook');
-    Route::post('/UpdateBook/{book}', 'updateBook');
-    Route::delete('/DeleteABook/{book}', 'deleteBook');
+
+
+    Route::group(['middleware' => ['auth','role:admin']], function(){
+        Route::get('/','showProducts')->name('products');
+        //viene de la API
+        Route::get('/GetAllProducts', 'getAllProducts');
+        Route::get('/GetAllBooksDataTable', 'getAllProducts');
+        Route::post('/SaveProduct', 'saveProduct');
+        Route::get('/GetAProduct/{product}', 'getAProduct');
+
+        Route::post('/UpdateProduct/{product}', 'updateProduct');
+        Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+
+        Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
+        Route::get('/GetABook/{book}', 'getABook');
+        Route::post('/UpdateBook/{book}', 'updateBook');
+        Route::delete('/DeleteABook/{book}', 'deleteBook');
+
+    });
 
 });
 
