@@ -42,6 +42,11 @@ class OrderController extends Controller
 
     public function deleteOrder(Order $order, Request $request)
     {
+        $product_id = $order->product_id;
+        $product = Product::find($product_id);
+        $product->stock = ($product->stock) + ($order->quantity);
+        $product->update();
+
         $order->delete();
         return response()->json([], 204);
     }
