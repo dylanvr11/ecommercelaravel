@@ -26,7 +26,7 @@ class CreateProductRequest extends FormRequest
 		return [
             'category_id' => ['required', 'string'],
             'name' => ['required', 'string'],
-            'image' => ['required', 'string'],
+            'image' => ['required'],
             'stock' => ['required', 'numeric'],
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric'],
@@ -42,7 +42,6 @@ class CreateProductRequest extends FormRequest
 			'name.string' => 'El nombre no es valido.',
 
             'image.required' => 'La imagen es requerida.',
-            'image.string' => 'La imagen no es valido.',
 
             'stock.required' => 'El almacenamiento es requerido',
             'stock.numeric'=> 'El almacenamiento no es valido.',
