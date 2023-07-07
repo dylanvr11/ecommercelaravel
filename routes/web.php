@@ -32,16 +32,19 @@ Route::get('/test', function(){
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
 
 // Users
-Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin|user'], 'controller' => UserController::class], function(){
-    Route::get('/','showAllUsers')->name('users');
-    Route::get('/CreateUser','showCreateUser')->name('user.create');
-    Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
+Route::group(['prefix' => 'Users', 'middleware' => ['auth'], 'controller' => UserController::class], function(){
 
-    Route::post('/CreateUser','createUser')->name('user.create.post');
-    Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
-    Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
     Route::get('/GetAllOrdersByUser/{user}', 'getAllOrdersByUser');
     Route::get('/GetAllOrdersByUserAuth', 'getAllOrdersByUserAuth');
+
+    Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin']],function(){
+        Route::get('/','showAllUsers')->name('users');
+        Route::get('/CreateUser','showCreateUser')->name('user.create');
+        Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
+        Route::post('/CreateUser','createUser')->name('user.create.post');
+        Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
+        Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
+    });
 
 });
 
