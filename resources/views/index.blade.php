@@ -4,10 +4,9 @@
         @foreach ($categories as $category)
             @if (count($category->Products)!=0)
             <div class="container mt-2">
-                <h1>{{$category->name}}</h1>
-            </div>
-            <div>
-                <a href="{{route('category.get',['category' => $category->id])}}" class="btn btn-primary mx-2">Ver mas</a>
+                <a href="{{ route('category.get', ['category' => $category->id]) }}">
+                    <h1>{{ $category->name }}</h1>
+                </a>
             </div>
             @foreach ($category->Products->where('stock', '>', 0)->take(4) as $product)
             <a href="{{ route('product.get',['product' => $product->id]) }}">
