@@ -44,6 +44,7 @@
 				try {
 					this.load = false
 					const { data } = await axios.get('Users/GetAllOrdersByUserAuth')
+					console.log(data)
 					//const { data } = await axios.get('api/Users/GetAllOrdersByUser/3')
 					this.orders = data.customer_orders
 					await this.calculationPrice()
