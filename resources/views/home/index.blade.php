@@ -14,7 +14,11 @@
                         <div class="card-body">
                             <h5 class="card-title">{{$product->name}}</h5>
                             <p class="card-text">{{$product->description}}</p>
-                            <a href="#" class="btn btn-primary">Comprar</a>
+                            <form action="{{route('add.cart.post',['product'=>$product->id])}}" method="post">
+                                @csrf
+                                <input type="number" name="quantity">
+                                <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
+                            </form>
                         </div>
                     </div>
             @endforeach
