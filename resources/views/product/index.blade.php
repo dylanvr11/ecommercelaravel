@@ -15,7 +15,7 @@
                         <p class="card-text">Categoria: {{$product->category->name}}</p>
                         <p class="card-text">Descripcion: {{$product->description}}</p>
                         <p class="card-text">Precio: {{$product->price}}</p>
-                        <p class="card-text">Stocl: {{$product->stock}}</p>
+                        <p class="card-text">Stock: {{$product->stock}}</p>
                         <a href="#" class="btn btn-primary">Comprar</a>
                     </div>
             </div>
