@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    /*
     public function createOrder(Request $request, Product $product)
     {
         if($request->quantity>$product->stock){
@@ -20,6 +21,22 @@ class OrderController extends Controller
         $order->price=$order->quantity*$product->price;
         $order->save();
         //if($request->ajax()) return response()->json(['order' => $order], 201);
+        return back()->with('success','Producto agregado');
+    }
+    sirve
+    */
+    public function createOrder(Request $request, Product $product)
+    {
+        if($request->quantity>$product->stock){
+            return back()->with('error','No hay la cantidad');
+        }
+        $order = new Order($request->all());
+        $order->customer_user_id=Auth::user()->id;
+        $order->product_id=$product->id;
+        $order->price=$order->quantity*$product->price;
+        $product->stock = ($product->stock)-($order->quantity);
+        $product->update();
+        $order->save();
         return back()->with('success','Producto agregado');
     }
 
