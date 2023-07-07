@@ -16,7 +16,11 @@
                         <p class="card-text">Descripcion: {{$product->description}}</p>
                         <p class="card-text">Precio: {{$product->price}}</p>
                         <p class="card-text">Stock: {{$product->stock}}</p>
-                        <a href="#" class="btn btn-primary">Comprar</a>
+                        <form action="{{route('add.cart.post',['product'=>$product->id])}}" method="post">
+                            @csrf
+                            <input type="number" name="quantity">
+                            <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
+                        </form>
                     </div>
             </div>
             <hr>
