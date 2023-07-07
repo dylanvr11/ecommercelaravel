@@ -32,64 +32,54 @@ Route::get('/test', function(){
 Route::get('/',[CategoryController::class, 'showHomeCategoriesWithProducts'])->name('home');
 
 // Users
-Route::group(['prefix' => 'Users', 'middleware' => ['auth'], 'controller' => UserController::class], function(){
-    Route::get('/GetAllOrdersByUserAuth', 'getAllOrdersByUserAuth');
+Route::group(['prefix' => 'Users', 'middleware' => ['auth','role:admin|user'], 'controller' => UserController::class], function(){
+    Route::get('/','showAllUsers')->name('users');
+    Route::get('/CreateUser','showCreateUser')->name('user.create');
+    Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
+
+    Route::post('/CreateUser','createUser')->name('user.create.post');
+    Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
+    Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
     Route::get('/GetAllOrdersByUser/{user}', 'getAllOrdersByUser');
-
-    Route::group(['prefix' => 'Users', 'middleware' => ['auth', 'role:user']],function(){
-        Route::get('/','showAllUsers')->name('users');
-        Route::get('/CreateUser','showCreateUser')->name('user.create');
-        Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
-
-        Route::post('/CreateUser','createUser')->name('user.create.post');
-        Route::put('/EditUser/{user}','updateUser')->name('user.edit.put');
-        Route::delete('/DeleteUser/{user}','deleteUser')->name('user.delete');
-    });
-
+    Route::get('/GetAllOrdersByUserAuth', 'getAllOrdersByUserAuth');
 
 });
 
 // Products
-Route::group(['prefix' => 'Products', 'controller' => ProductController::class], function(){
+Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin|user',], 'controller' => ProductController::class], function(){
+    Route::get('/','showProducts')->name('products');
+    //viene de la API
+    Route::get('/GetAllProducts', 'getAllProducts');
+    Route::get('/GetAllBooksDataTable', 'getAllProducts');
+    Route::post('/SaveProduct', 'saveProduct');
+    Route::get('/GetAProduct/{product}', 'getAProduct');
 
-        Route::get('/GetAProductWithCategory/{product}','showProductWithCategory')->name('product.get');
+    Route::post('/UpdateProduct/{product}', 'updateProduct');
+    Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
+    Route::get('/GetAProductWithCategory/{product}','getAProductWithCategory');
+    Route::get('/GetAProductWithCategory/{product}','showProductWithCategory')->name('product.get');;
 
-        Route::group(['prefix' => 'Products', 'middleware' => ['auth','role:admin']],function(){
-            Route::get('/','showProducts')->name('products');
-            //viene de la API
-            Route::get('/GetAllProducts', 'getAllProducts');
-            Route::get('/GetAllBooksDataTable', 'getAllProducts');
-            Route::post('/SaveProduct', 'saveProduct');
-            Route::get('/GetAProduct/{product}', 'getAProduct');
 
-            Route::post('/UpdateProduct/{product}', 'updateProduct');
-            Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
-            Route::get('/GetAProductWithCategory/{product}','getAProductWithCategory');
-
-            Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
-            Route::get('/GetABook/{book}', 'getABook');
-            Route::post('/UpdateBook/{book}', 'updateBook');
-            Route::delete('/DeleteABook/{book}', 'deleteBook');
-    });
+    Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
+    Route::get('/GetABook/{book}', 'getABook');
+    Route::post('/UpdateBook/{book}', 'updateBook');
+    Route::delete('/DeleteABook/{book}', 'deleteBook');
 
 });
 
 //Categories
-Route::group(['prefix' => 'Categories','controller' => CategoryController::class], function(){
-
+Route::group(['prefix' => 'Categories','middleware' => ['auth'], 'controller' => CategoryController::class], function(){
+    Route::get('/','showCategories')->name('categories');
+    //Viene de la API
+    Route::get('/GetAllCategories', 'getAllCategories');
+    Route::post('/SaveCategory', 'saveCategory');
+    Route::get('/GetAllProductsByCategory/{category}', 'getAllProductsByCategory');
+    Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
+    Route::get('/GetFiveProductsByCategories', 'getFiveProductsByCategories');
     Route::get('/GetAllProductsByCategory/{category}', 'showCategoryWithProducts')->name('category.get');
+    Route::post('/UpdateCategory/{category}', 'updateCategory');
+    Route::delete('/DeleteACategory/{category}', 'deleteCategory');
 
-    Route::group(['prefix' => 'Categories','middleware' => ['auth', 'role:admin']],function(){
-        Route::delete('/DeleteACategory/{category}', 'deleteCategory');
-        Route::post('/UpdateCategory/{category}', 'updateCategory');
-        Route::post('/SaveCategory', 'saveCategory');
-        Route::get('/','showCategories')->name('categories');
-        //Viene de la API
-        Route::get('/GetAllCategories', 'getAllCategories');
-        Route::get('/GetAllProductsByCategory/{category}', 'getAllProductsByCategory');
-        Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');
-        Route::get('/GetFiveProductsByCategories', 'getFiveProductsByCategories');
-    });
 });
 
 //Orders
