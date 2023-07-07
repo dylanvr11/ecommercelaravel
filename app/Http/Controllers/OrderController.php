@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function createOrder(Request $request, Product $product)
     {
         if($request->quantity>$product->stock){
-            return back()->with('errors','No hay la cantidad');
+            return back()->with('error','No hay la cantidad');
         }
         $order = new Order($request->all());
         $order->customer_user_id=Auth::user()->id;
