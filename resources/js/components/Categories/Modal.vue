@@ -50,7 +50,6 @@
 		data() {
 			return {
 				is_create: true,
-				categories: [],
 				category: {},
 				error_request: null
 			}
@@ -60,17 +59,12 @@
 		},
 		methods: {
 			index() {
-				this.getCategories()
 				this.setCategory()
 			},
 			setCategory() {
 				if (!this.category_data) return
 				this.category = { ...this.category_data }
 				this.is_create = false
-			},
-			async getCategories() {
-				const { data } = await axios.get('Categories/GetAllCategories')
-				this.categories = data.categories
 			},
 			async storeCategory() {
 				try {

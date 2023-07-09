@@ -1,67 +1,87 @@
 <template>
-	<table class="table">
+	<table class="table" id="categoryTable" @click="getEvent">
 		<thead>
 			<tr>
 				<th>Nombre</th>
+				<th>Acciones</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr v-for="(category, index) in categories" :key="index">
-				<th>{{ category.name }}</th>
-				<td>
-					<button class="btn btn-warning me-2" @click="getCategory(category)">
-						Editar
-					</button>
-					<button class="btn btn-danger" @click="deleteCategory(category)">
-						Eliminar
-					</button>
-				</td>
-			</tr>
-		</tbody>
+		<tbody></tbody>
 	</table>
 </template>
 
 <script>
 	export default {
-		props: ['categories_data'],
-		//components: {},
 		data() {
 			return {
-				categories: []
+				categories: [],
+				datatable: {}
 			}
 		},
-		created() {
+		mounted() {
 			this.index()
 		},
 		methods: {
-			index() {
-				// this.products = this.products_data
-				this.categories = [...this.categories_data]
+			async index() {
+				this.mountDataTable()
 			},
-			async getCategory(category) {
+			mountDataTable() {
+				this.datatable = $('#categoryTable').DataTable({
+					Processing: true,
+					serverSide: true,
+					ajax: {
+						url: '/Categories/GetAllCategoriesDataTable'
+					},
+					columns: [{ data: 'name' }, { data: 'action' }],
+					error: function (xhr, error, code) {
+						console.log(xhr, code)
+					}
+				})
+			},
+			async getCategories() {
 				try {
-					//const { data } = await axios.get(`Products/GetAProduct/${product_id}`)
-					// this.$parent.product = data.product
-					this.$parent.editCategory(category)
+					const { data } = await axios.get('Categories/GetAllCategories')
+					this.categories = data.categories
+				} catch (error) {
+					console.error(error)
+				}
+				this.mountDataTable()
+			},
+			getEvent(event) {
+				const button = event.target
+				if (button.getAttribute('role') == 'edit') {
+					this.getCategory(button.getAttribute('data-id'))
+				}
+				if (button.getAttribute('role') == 'delete') {
+					this.deleteCategory(button.getAttribute('data-id'))
+				}
+			},
+			async getCategory(category_id) {
+				try {
+					this.datatable.destroy()
+					const { data } = await axios.get(`Categories/GetACategory/${category_id}`)
+					this.$parent.editCategory(data.category)
+					this.index()
 				} catch (error) {
 					console.error(error)
 				}
 			},
-			async deleteCategory(category) {
+			async deleteCategory(user_id) {
 				try {
 					const result = await swal.fire({
 						icon: 'info',
-						title: 'Quiere eliminar el libro?',
+						title: 'Quiere eliminar la categoria?',
 						showCancelButton: true,
 						confirmButtonText: 'Eliminar'
 					})
 					if (!result.isConfirmed) return
-					await axios.delete(`Categories/DeleteACategory/${category.id}`)
-					this.$parent.getCategories()
+					this.datatable.destroy()
+					await axios.delete(`Categories/DeleteACategory/${user_id}`)
+					this.index()
 					swal.fire({
 						icon: 'success',
 						title: 'Felicitaciones!',
-						text: 'Categoria Eliminado!'
+						text: 'Categoria Eliminada!'
 					})
 				} catch (error) {
 					console.error(error)

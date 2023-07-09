@@ -5,15 +5,8 @@
 			<button @click="openModal" class="btn btn-primary">Crear Categoria</button>
 		</div>
 		<div class="card-body">
-			<section class="table-responsive" v-if="load">
-				<table-component :categories_data="categories" />
-			</section>
-
-			<!-- load -->
-			<section v-else class="d-flex justify-content-center my-3">
-				<div class="spinner-border" role="status">
-					<span class="visually-hidden">Loading...</span>
-				</div>
+			<section class="table-responsive">
+				<table-component ref="table" />
 			</section>
 		</div>
 		<section v-if="load_modal">
@@ -26,37 +19,18 @@
 	import TableComponent from './Table.vue'
 	import Modal from './Modal.vue'
 	export default {
-		props: [],
 		components: {
 			TableComponent,
 			Modal
 		},
 		data() {
 			return {
-				categories: [],
-				load: false,
 				load_modal: false,
 				modal: null,
 				category: null
 			}
 		},
-		created() {
-			this.index()
-		},
 		methods: {
-			async index() {
-				await this.getCategories()
-			},
-			async getCategories() {
-				try {
-					this.load = false
-					const { data } = await axios.get('Categories/GetAllCategories')
-					this.categories = data.categories
-					this.load = true
-				} catch (error) {
-					console.error(error)
-				}
-			},
 			openModal() {
 				this.load_modal = true
 				setTimeout(() => {
@@ -73,7 +47,8 @@
 			},
 			closeModal() {
 				this.modal.hide()
-				this.getCategories()
+				this.$refs.table.datatable.destroy()
+				this.$refs.table.index()
 			},
 			editCategory(category) {
 				this.category = category

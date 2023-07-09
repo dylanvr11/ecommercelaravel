@@ -97,7 +97,10 @@ Route::group(['prefix' => 'Categories', 'controller' => CategoryController::clas
     Route::group(['middleware' => ['auth','role:admin']], function(){
         Route::get('/','showCategories')->name('categories');
         //Viene de la API
+        Route::get('/GetACategory/{category}', 'getACategory');
         Route::get('/GetAllCategories', 'getAllCategories');
+        Route::get('/GetAllCategoriesDataTable', 'getAllCategories');
+        Route::get('/GetAllCategoriesDataTable','getAllCategoriesForDataTable');
         Route::post('/SaveCategory', 'saveCategory');
 
         Route::get('/GetAllProductsByCategories', 'getAllProductsByCategories');

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -21,6 +20,34 @@ class CategoryController extends Controller
 		$categories = Category::get();
 		return response()->json(['categories' => $categories], 200);
 	}
+
+    public function getAllCategoriesForDataTable()
+    {
+        $categories = Category::get();
+        return DataTables::of($categories)
+        ->addColumn('action', function($row) {
+            return "<a
+            href='#'
+            onclick='event.preventDefault();'
+            data-id='{$row->id}'
+            role='edit'
+            class='btn btn-warning btn-sm'>Edit</a>
+            <a
+            href='#'
+            onclick='event.preventDefault();'
+            data-id='{$row->id}'
+            role='delete'
+            class='btn btn-danger btn-sm'>Delete</a>";
+        })
+        ->rawColumns(['action'])
+        ->make();
+    }
+
+    public function getACategory(Category $category){
+        //$product->load('Category');
+        return response()->json(['category' => $category],200);
+    }
+
 
     public function saveCategory(CreateCategoryRequest $request){
         $category = new Category($request->all());
