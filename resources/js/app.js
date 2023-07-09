@@ -8,6 +8,7 @@ import CategoriesList from './components/Categories/Index.vue'
 import CartsList from './components/Carts/Index.vue'
 const app = createApp({
 	components: {
+		UsersList,
 		ProductsList,
 		CategoriesList,
 		CartsList
