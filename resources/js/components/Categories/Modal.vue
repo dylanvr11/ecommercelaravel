@@ -14,7 +14,7 @@
 					></button>
 				</div>
 				<div class="modal-body">
-					<form @submit.prevent="storeCategory" enctype="multipart/form-data">
+					<form @submit.prevent="storeCategory">
 						<div class="mb-3">
 							<label for="name" class="form-label">Nombre</label>
 							<input

@@ -29,6 +29,7 @@ Route::group(['prefix' => 'Users', 'controller' => UserController::class], funct
     Route::post('/CreateUser', 'createUser');  //POST -> Cread data
     Route::put('/UpdateUser/{user}', 'updateUser'); //PUT -> Actualiza data
     Route::delete('/DeleteUser/{user}', 'deleteUser'); //DELETE -> Elimina data
+    Route::get('/GetAllRoles', 'getAllRoles');
 });
 
 // Orders

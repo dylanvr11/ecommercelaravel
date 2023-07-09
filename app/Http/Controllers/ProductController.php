@@ -35,7 +35,7 @@ class ProductController extends Controller
     }
     sin las acciones
 */
-    public function getAllBooksForDataTable()
+    public function getAllProductsForDataTable()
     {
         $products = Product::get();
         return DataTables::of($products)

@@ -33,7 +33,7 @@
 					Processing: true,
 					serverSide: true,
 					ajax: {
-						url: '/Products/GetAllBooksDataTable'
+						url: '/Products/GetAllProductsDataTable'
 					},
 					columns: [
 						{ data: 'name' },

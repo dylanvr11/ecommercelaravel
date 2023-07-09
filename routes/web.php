@@ -39,6 +39,15 @@ Route::group(['prefix' => 'Users', 'middleware' => ['auth'], 'controller' => Use
 
     Route::group(['middleware' => ['auth','role:admin']],function(){
         Route::get('/','showAllUsers')->name('users');
+        //Route::get('/GetAllUsersDataTable', 'getAllProducts');
+        Route::get('/GetAllUsers', 'getAllUsers');
+        Route::get('/GetAllRoles', 'getAllRoles');
+        Route::post('/CreateUser', 'createUser');
+        Route::get('/GetAnUser/{user}', 'getAnUser');
+        Route::delete('/DeleteAUser/{user}','deleteUser');
+        Route::post('/UpdateUser/{user}', 'updateUser');
+        Route::get('/GetAllRoles', 'getAllRoles');
+        Route::get('/GetAllUsersDataTable', 'getAllUsersForDataTable'); //renderizado del datatable
         Route::get('/CreateUser','showCreateUser')->name('user.create');
         Route::get('/EditUser/{user}','showEditUser')->name('user.edit');
         Route::post('/CreateUser','createUser')->name('user.create.post');
@@ -62,14 +71,14 @@ Route::group(['prefix' => 'Products', 'controller' => ProductController::class],
         Route::get('/','showProducts')->name('products');
         //viene de la API
         Route::get('/GetAllProducts', 'getAllProducts');
-        Route::get('/GetAllBooksDataTable', 'getAllProducts');
+        Route::get('/GetAllProductsDataTable', 'getAllProducts');
         Route::post('/SaveProduct', 'saveProduct');
         Route::get('/GetAProduct/{product}', 'getAProduct');
 
         Route::post('/UpdateProduct/{product}', 'updateProduct');
         Route::delete('/DeleteAProduct/{product}', 'deleteProduct');
 
-        Route::get('/GetAllBooksDataTable', 'getAllBooksForDataTable'); //renderizado del datatable
+        Route::get('/GetAllProductsDataTable', 'getAllProductsForDataTable'); //renderizado del datatable
         Route::get('/GetABook/{book}', 'getABook');
         Route::post('/UpdateBook/{book}', 'updateBook');
         Route::delete('/DeleteABook/{book}', 'deleteBook');

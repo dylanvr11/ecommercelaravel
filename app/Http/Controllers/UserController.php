@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -37,6 +38,28 @@ class UserController extends Controller
     {
         $users = User::get();
         return response()->json(['users' => $users],200);
+    }
+
+    public function getAllUsersForDataTable()
+    {
+        $users = User::get();
+        return DataTables::of($users)
+        ->addColumn('action', function($row) {
+            return "<a
+            href='#'
+            onclick='event.preventDefault();'
+            data-id='{$row->id}'
+            role='edit'
+            class='btn btn-warning btn-sm'>Edit</a>
+            <a
+            href='#'
+            onclick='event.preventDefault();'
+            data-id='{$row->id}'
+            role='delete'
+            class='btn btn-danger btn-sm'>Delete</a>";
+        })
+        ->rawColumns(['action'])
+        ->make();
     }
 
     public function getAllOrdersByUser(User $user)
