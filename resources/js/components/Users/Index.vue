@@ -2,13 +2,13 @@
 	<div class="card mx-5 my-5">
 		<div class="card-header d-flex justify-content-between">
 			<h2>Productos</h2>
-			<button @click="openModal" class="btn btn-primary">Crear Producto</button>
+			<!-- <button @click="openModal" class="btn btn-primary">Crear Producto</button> -->
 		</div>
-		<div class="card-body">
+		<!-- <div class="card-body">
 			<section class="table-responsive">
 				<table-component ref="table" />
 			</section>
-		</div>
+		</div> -->
 		<!-- <section v-if="load_modal">
 			<modal :product_data="product" />
 		</section> -->
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-	import TableComponent from './Table.vue'
-	import Modal from './Modal.vue'
+	//import TableComponent from './Table.vue'
+	//import Modal from './Modal.vue'
 	export default {
 		components: {
-			TableComponent,
-			Modal
+			// TableComponent,
+			// Modal
 		},
 		data() {
 			return {
