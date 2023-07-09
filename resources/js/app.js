@@ -6,6 +6,7 @@ import vSelect from 'vue-select'
 import ProductsList from './components/Products/Index.vue'
 import CategoriesList from './components/Categories/Index.vue'
 import CartsList from './components/Carts/Index.vue'
+import UsersList from './components/Users/Index.vue'
 const app = createApp({
 	components: {
 		UsersList,

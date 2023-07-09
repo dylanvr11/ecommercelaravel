@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function showAllUsers(){
         $users = $this->getAllUsers()->original['users'];
-        return view('users.index', compact('users'));
+        return view('users.index2', compact('users'));
     }
 
     public function showEditUser(User $user){
