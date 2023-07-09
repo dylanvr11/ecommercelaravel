@@ -123,17 +123,14 @@
 			},
 			async getRoles() {
 				const { data } = await axios.get('Users/GetAllRoles')
-				console.log(data)
 				this.roles = data.roles
-				//console.log(this.categories)
 			},
 			async storeUser() {
 				try {
 					if (this.is_create) {
-						//console.log(this.book)
 						await axios.post('Users/CreateUser', this.user)
 					} else {
-						await axios.post(`Users/UpdateUser${this.user.id}`)
+						await axios.post(`Users/UpdateUser/${this.user.id}`, this.user)
 					}
 					swal.fire({
 						icon: 'success',

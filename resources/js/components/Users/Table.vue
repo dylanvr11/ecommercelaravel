@@ -48,9 +48,9 @@
 					}
 				})
 			},
-			async getProducts() {
+			async getUsers() {
 				try {
-					const { data } = await axios.get('Products/GetAllProducts')
+					const { data } = await axios.get('Users/GetAllUsers')
 					this.users = data.users
 				} catch (error) {
 					console.error(error)
@@ -70,7 +70,7 @@
 				try {
 					this.datatable.destroy()
 					const { data } = await axios.get(`Users/GetAnUser/${user_id}`)
-					this.$parent.editUser(data.product)
+					this.$parent.editUser(data.user)
 					this.index()
 				} catch (error) {
 					console.error(error)

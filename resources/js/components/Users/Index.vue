@@ -41,7 +41,7 @@
 					const modal = document.getElementById('user_modal')
 					modal.addEventListener('hidden.bs.modal', () => {
 						this.load_modal = false
-						this.product = null
+						this.user = null
 					})
 				}, 200)
 			},

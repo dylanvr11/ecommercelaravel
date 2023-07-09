@@ -66,7 +66,6 @@
 					this.modal.show()
 					const modal = document.getElementById('category_modal')
 					modal.addEventListener('hidden.bs.modal', () => {
-						console.log('hola')
 						this.load_modal = false
 						this.category = null
 					})
